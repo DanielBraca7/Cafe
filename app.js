@@ -1,6 +1,6 @@
 /**
- * LÓGICA DE INTERACCIÓN - FIDELIZA B2B SAAS
- * Control de Presupuesto/Configurador, Recomendador de Estrategia y Filtros
+ * LÓGICA DE INTERACCIÓN - 2GETHERREWARDS
+ * Configurador de Planes, Recomendador de Estrategia y Filtros
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCloseBtn = document.getElementById('modal-close-btn');
 
     // Estado del Configurador (Carrito)
-    let cart = JSON.parse(localStorage.getItem('fideliza_cart')) || [];
+    let cart = JSON.parse(localStorage.getItem('2gr_cart')) || [];
 
     // ==========================================
     // 2. CABECERA & DISEÑO RESPONSIVE
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Guardar configurador en LocalStorage
     function saveCart() {
-        localStorage.setItem('fideliza_cart', JSON.stringify(cart));
+        localStorage.setItem('2gr_cart', JSON.stringify(cart));
         updateCartUI();
     }
 
@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cartEmptyView.style.display = 'flex';
             cartBadgeCount.classList.remove('has-items');
             cartBadgeCount.textContent = '0';
-            cartSubtotal.textContent = '€0.00';
-            cartTotalPrice.textContent = '€0.00';
+            cartSubtotal.textContent = '$0.00';
+            cartTotalPrice.textContent = '$0.00';
         } else {
             cartEmptyView.style.display = 'none';
             
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${item.img}" alt="${item.name}" class="cart-item-img">
                     <div class="cart-item-details">
                         <h4 class="cart-item-title">${item.name}</h4>
-                        <span class="cart-item-price">${item.price.toFixed(2)}</span>
+                        <span class="cart-item-price">$${item.price.toFixed(2)} <small>/mes</small></span>
                         <div class="cart-item-actions">
                             <div class="quantity-controller">
                                 <button class="qty-btn minus-btn" data-id="${item.id}"><i class="fa-solid fa-minus"></i></button>
@@ -201,8 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Actualizar Contadores y Precios
             cartBadgeCount.textContent = totalCount;
             cartBadgeCount.classList.add('has-items');
-            cartSubtotal.textContent = `€${subtotal.toFixed(2)}`;
-            cartTotalPrice.textContent = `€${subtotal.toFixed(2)}`;
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartTotalPrice.textContent = `$${subtotal.toFixed(2)}`;
         }
     }
 
@@ -316,80 +316,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Algoritmo de recomendación B2B
+    // Algoritmo de recomendación 2GetherRewards
     function showQuizRecommendation() {
         quizResultScreen.style.display = 'block';
         
         let recommendation = {};
 
-        // Lógica de decisiones del configurador inteligente
-        if (quizAnswers.flavor === 'strong') {
+        // Lógica: Franquicia/gran volumen → Enterprise
+        if (quizAnswers.type === 'grains' || quizAnswers.flavor === 'strong') {
             recommendation = {
                 id: 3,
-                name: 'Plan Enterprise',
-                desc: 'La solución definitiva para multi-sucursales o franquicias con más de 2000 clientes/mes. Incluye infraestructura exclusiva, dominio personalizado para tus tarjetas y soporte VIP prioritario.',
-                price: '199.00',
+                name: 'Plan ENTERPRISE',
+                desc: 'La solución definitiva para franquicias y multi-sucursales. Sucursales y clientes ilimitados, geo localización global y control corporativo total.',
+                price: '99.00',
                 img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=350&auto=format&fit=crop'
             };
-        } else if (quizAnswers.addons === 'pastry') {
-            if (quizAnswers.type === 'hot') {
-                recommendation = {
-                    id: 4,
-                    name: 'Módulo WhatsApp API',
-                    desc: 'Perfecto para enviar recordatorios de puntos y ofertas de cumpleaños automatizadas por WhatsApp oficial directo a los clientes de tu local de restauración.',
-                    price: '15.00',
-                    img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?q=80&w=350&auto=format&fit=crop'
-                };
-            } else {
-                recommendation = {
-                    id: 2,
-                    name: 'Plan Growth',
-                    desc: 'La opción recomendada para comercios minoristas y retail. Automatiza la retención de clientes con email marketing integrado y segmentación avanzada por comportamiento.',
-                    price: '79.00',
-                    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
-                };
-            }
-        } else { // pure
-            if (quizAnswers.type === 'cold') {
-                recommendation = {
-                    id: 6,
-                    name: 'Integración TPV / POS',
-                    desc: 'La herramienta óptima para tu tienda física. Conecta Fideliza con tu terminal de cobro (TPV) para asignar puntos en tiempo real a cada cliente al pagar en caja.',
-                    price: '20.00',
-                    img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=350&auto=format&fit=crop'
-                };
-            } else if (quizAnswers.type === 'grains') {
-                recommendation = {
-                    id: 5,
-                    name: 'Módulo AI Analytics',
-                    desc: 'Ideal para e-commerce y negocios digitales. Implementa algoritmos de IA predictiva que detectan patrones de abandono de tus usuarios recurrentes.',
-                    price: '25.00',
-                    img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=350&auto=format&fit=crop'
-                };
-            } else {
-                recommendation = {
-                    id: 1,
-                    name: 'Plan Starter',
-                    desc: 'El plan básico inicial idóneo para hostelería local pequeña. Incluye tarjetas de fidelización QR personalizadas para empezar sin complicaciones.',
-                    price: '29.00',
-                    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
-                };
-            }
+        // Lógica: Volumen medio o negocio en expansión → Growth
+        } else if (quizAnswers.flavor === 'acid') {
+            recommendation = {
+                id: 2,
+                name: 'Plan GROWTH',
+                desc: 'El más popular. Hasta 5 sucursales y 5,000 clientes. Incluye envío de ofertas, cupones y geo localización por sucursal. Perfecto para negocios en expansión.',
+                price: '69.00',
+                img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
+            };
+        // Lógica: Pequeño negocio o inicio → Starter
+        } else {
+            recommendation = {
+                id: 1,
+                name: 'Plan START',
+                desc: 'El impulso inicial para digitalizar tu negocio. 1 sucursal, hasta 500 clientes, tarjetas de sellos y regalo, notificaciones push y dashboard en tiempo real.',
+                price: '49.00',
+                img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
+            };
         }
 
         // Renderizar tarjeta recomendada
         recommendedProductCard.innerHTML = `
             <img src="${recommendation.img}" alt="${recommendation.name}" class="result-image">
-            <span class="product-category">Estrategia Recomendada</span>
+            <span class="product-category">Plan Recomendado para ti</span>
             <div class="result-name">${recommendation.name}</div>
             <p class="result-desc">${recommendation.desc}</p>
-            <div class="result-price">${recommendation.price}</div>
+            <div class="result-price">$${recommendation.price}</div>
             <button class="btn btn-primary" id="add-quiz-recommendation-btn" 
                 data-id="${recommendation.id}" 
                 data-name="${recommendation.name}" 
                 data-price="${recommendation.price}" 
                 data-img="${recommendation.img}">
-                Añadir a mi Suscripción
+                Contratar este Plan
             </button>
         `;
 
@@ -425,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Crear resumen en el modal de éxito
-        const randomOrderId = '#FID-' + Math.floor(1000 + Math.random() * 9000);
+        const randomOrderId = '#2GR-' + Math.floor(1000 + Math.random() * 9000);
         let itemsCount = 0;
         let total = 0;
         
@@ -436,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         summaryOrderId.textContent = randomOrderId;
         summaryItemsCount.textContent = `${itemsCount} plan(es) / módulo(s)`;
-        summaryTotalPrice.textContent = `€${total.toFixed(2)}`;
+        summaryTotalPrice.textContent = `$${total.toFixed(2)}`;
 
         // Cerrar configurador
         closeCart();
@@ -463,11 +437,16 @@ const style = document.createElement('style');
 style.textContent = `
     @keyframes pulseBtn {
         0% { transform: scale(1); }
-        50% { transform: scale(1.15); box-shadow: 0 0 15px var(--color-accent); }
+        50% { transform: scale(1.15); box-shadow: 0 0 15px var(--color-primary); }
         100% { transform: scale(1); }
     }
     .pulse-anim {
         animation: pulseBtn 0.4s ease;
+    }
+    .cart-item-price small {
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        font-weight: 400;
     }
 `;
 document.head.appendChild(style);
