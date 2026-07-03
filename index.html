@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origen | Café de Especialidad & Repostería Premium</title>
+    <meta name="description" content="Descubre Origen, una tienda boutique de café de especialidad, repostería artesanal y granos selectos. Cultivado con pasión y tostado con precisión.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/508/508786.png">
+    
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- FontAwesome para iconos de alta calidad -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- CABECERA (Header) -->
+    <header class="header" id="main-header">
+        <div class="container">
+            <a href="#inicio" class="logo" id="logo-brand">
+                <i class="fa-solid fa-mug-hot"></i> ORIGEN<span>.</span>
+            </a>
+            
+            <nav class="nav" id="main-nav">
+                <a href="#inicio" class="nav-link active" id="nav-home">Inicio</a>
+                <a href="#menu" class="nav-link" id="nav-menu">Menú</a>
+                <a href="#quiz" class="nav-link" id="nav-quiz">Café Quiz</a>
+                <a href="#nosotros" class="nav-link" id="nav-about">Nosotros</a>
+                <a href="#opiniones" class="nav-link" id="nav-reviews">Opiniones</a>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="cart-icon-btn" id="cart-toggle-btn" aria-label="Abrir carrito de compras">
+                    <i class="fa-solid fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cart-badge-count">0</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobile-menu-btn" aria-label="Abrir menú de navegación móvil">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECCIÓN HÉROE (Hero) -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-subtitle">Cafetería Boutique</span>
+                <h1>El arte del café, <span>tostado a la perfección</span></h1>
+                <p class="hero-description">En Origen seleccionamos granos de comercio justo de las alturas más prestigiosas del mundo para brindar un perfil de sabor inigualable en cada taza. Vive una experiencia sensorial única.</p>
+                <div class="hero-actions">
+                    <a href="#menu" class="btn btn-primary" id="hero-cta-menu">Explorar Menú</a>
+                    <a href="#quiz" class="btn btn-outline" id="hero-cta-quiz"><i class="fa-solid fa-wand-magic-sparkles"></i> Personalizar mi Taza</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN BENEFICIOS (Features) -->
+    <section class="features" id="beneficios">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card" id="feature-1">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3>Grano de Especialidad</h3>
+                    <p>Granos de origen único cultivados a más de 1,500 metros sobre el nivel del mar, con trazabilidad completa.</p>
+                </div>
+                
+                <div class="feature-card" id="feature-2">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <h3>Tostado Artesanal</h3>
+                    <p>Tostamos en pequeños lotes semanales para preservar los aceites esenciales y notas aromáticas de cada fruto.</p>
+                </div>
+                
+                <div class="feature-card" id="feature-3">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3>Baristas Certificados</h3>
+                    <p>Expertos apasionados en técnicas de extracción clásica y de filtro (V60, Chemex, Aeropress).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN TIENDA / MENÚ (Shop) -->
+    <section class="shop" id="menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestro <span>Menú de Origen</span></h2>
+                <p>Selecciona tu bebida o grano favorito y agrégalo a tu orden.</p>
+            </div>
+            
+            <!-- Filtros de Categoría -->
+            <div class="filter-container" id="menu-filters">
+                <button class="filter-btn active" data-category="all" id="filter-all">Todo</button>
+                <button class="filter-btn" data-category="hot" id="filter-hot">Café Caliente</button>
+                <button class="filter-btn" data-category="cold" id="filter-cold">Bebidas Frías</button>
+                <button class="filter-btn" data-category="pastry" id="filter-pastry">Repostería Premium</button>
+                <button class="filter-btn" data-category="grains" id="filter-grains">Granos de Café</button>
+            </div>
+            
+            <!-- Grid de Productos -->
+            <div class="products-grid" id="products-container">
+                <!-- Producto 1: Etiopía Single Origin (Granos) -->
+                <div class="product-card" data-category="grains" id="prod-ethiopia">
+                    <span class="product-badge">Favorito</span>
+                    <div class="product-img-wrapper">
+                        <img src="assets/coffee_bag.png" alt="Bolsa de Café Etiopía Origen" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Granos de Café</span>
+                        <h3 class="product-title">Etiopía Yirgacheffe</h3>
+                        <p class="product-desc">Notas florales de jazmín, té negro y un sutil toque cítrico a bergamota. Tueste medio.</p>
+                        <div class="product-footer">
+                            <span class="product-price">24.00</span>
+                            <button class="add-to-cart-btn" data-id="1" data-name="Etiopía Yirgacheffe (250g)" data-price="24.00" data-img="assets/coffee_bag.png" aria-label="Añadir al carrito">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2: Espresso Doble (Caliente) -->
+                <div class="product-card" data-category="hot" id="prod-espresso">
+                    <div class="product-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=350&auto=format&fit=crop" alt="Espresso Corto Doble" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Café Caliente</span>
+                        <h3 class="product-title">Espresso Doble</h3>
+                        <p class="product-desc">Extracción intensa de nuestra mezcla de la casa, crema densa y notas de chocolate amargo.</p>
+                        <div class="product-footer">
+                            <span class="product-price">3.50</span>
+                            <button class="add-to-cart-btn" data-id="2" data-name="Espresso Doble" data-price="3.50" data-img="https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=350&auto=format&fit=crop" aria-label="Añadir al carrito">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3: Capuchino (Caliente) -->
+                <div class="product-card" data-category="hot" id="prod-cappuccino">
+                    <span class="product-badge">Clásico</span>
+                    <div class="product-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=350&auto=format&fit=crop" alt="Capuchino de Origen" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Café Caliente</span>
+                        <h3 class="product-title">Capuchino Italiano</h3>
+                        <p class="product-desc">Espresso perfectamente balanceado con leche vaporizada y una corona de espuma aterciopelada.</p>
+                        <div class="product-footer">
+                            <span class="product-price">4.50</span>
+                            <button class="add-to-cart-btn" data-id="3" data-name="Capuchino Italiano" data-price="4.50" data-img="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=350&auto=format&fit=crop" aria-label="Añadir al carrito">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 4: Flat White (Caliente) -->
+                <div class="product-card" data-category="hot" id="prod-flatwhite">
+                    <div class="product-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=350&auto=format&fit=crop" alt="Flat White de Especialidad" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Café Caliente</span>
+                        <h3 class="product-title">Flat White Velvet</h3>
+                        <p class="product-desc">Doble Ristretto coronado con microespuma de leche sedosa. Textura extra suave.</p>
+                        <div class="product-footer">
+                            <span class="product-price">4.80</span>
+                            <button class="add-to-cart-btn" data-id="4" data-name="Flat White Velvet" data-price="4.80" data-img="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=350&auto=format&fit=crop" aria-label="Añadir al carrito">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 5: Cold Brew (Fría) -->
+                <div class="product-card" data-category="cold" id="prod-coldbrew">
+                    <span class="product-badge">Refrescante</span>
+                    <div class="product-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?q=80&w=350&auto=format&fit=crop" alt="Botella de Cold Brew" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Bebidas Frías</span>
+                        <h3 class="product-title">Cold Brew Infundido</h3>
+                        <p class="product-desc">Café extraído en frío por 18 horas, con notas cítricas marcadas y cuerpo súper ligero.</p>
+                        <div class="product-footer">
+                            <span class="product-price">5.00</span>
+                            <button class="add-to-cart-btn" data-id="5" data-name="Cold Brew Infundido" data-price="5.00" data-img="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?q=80&w=350&auto=format&fit=crop" aria-label="Añadir al carrito">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 6: Pistachio Croissant (Repostería) -->
+                <div class="product-card" data-category="pastry" id="prod-croissant">
+                    <span class="product-badge">Gourmet</span>
+                    <div class="product-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=350&auto=format&fit=crop" alt="Croissant relleno de pistacho" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Repostería Premium</span>
+                        <h3 class="product-title">Croissant de Pistacho</h3>
+                        <p class="product-desc">Hojaldre de mantequilla pura, relleno con crema de pistacho siciliano y decorado con pistachos tostados.</p>
+                        <div class="product-footer">
+                            <span class="product-price">6.00</span>
+                            <button class="add-to-cart-btn" data-id="6" data-name="Croissant de Pistacho" data-price="6.00" data-img="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=350&auto=format&fit=crop" aria-label="Añadir al carrito">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN QUIZ DYNAMIC (Coffee Finder Quiz) -->
+    <section class="quiz-section" id="quiz">
+        <div class="container">
+            <div class="section-title">
+                <h2>Encuentra tu <span>Taza Ideal</span></h2>
+                <p>Responde 3 preguntas simples y nuestro algoritmo te recomendará el café perfecto para ti.</p>
+            </div>
+            
+            <div class="quiz-container" id="quiz-box">
+                <!-- Pantalla Inicial -->
+                <div class="quiz-intro" id="quiz-intro-screen">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <h3>¿Qué café encaja con tu personalidad?</h3>
+                    <p>Déjanos guiarte hacia tu próxima experiencia favorita, ya sea un grano exótico para preparar en casa o una bebida cremosa en barra.</p>
+                    <button class="btn btn-primary" id="start-quiz-btn">Comenzar Test</button>
+                </div>
+                
+                <!-- Pregunta 1 -->
+                <div class="quiz-steps" id="quiz-step-1">
+                    <div class="quiz-progress"><div class="quiz-progress-bar" style="width: 33%"></div></div>
+                    <h3 class="quiz-question">1. ¿Cómo te gusta tomar tu café normalmente?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="hot">
+                            <i class="fa-solid fa-mug-hot"></i>
+                            <span>Caliente y Reconfortante</span>
+                            <p>Prefiero tazas calientes tradicionales.</p>
+                        </div>
+                        <div class="quiz-option" data-answer="cold">
+                            <i class="fa-solid fa-whiskey-glass"></i>
+                            <span>Helado y Refrescante</span>
+                            <p>Me encantan las bebidas frías y ligeras.</p>
+                        </div>
+                        <div class="quiz-option" data-answer="grains">
+                            <i class="fa-solid fa-box-open"></i>
+                            <span>Preparar en Casa</span>
+                            <p>Busco granos de alta calidad para mi molino.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="quiz-steps" id="quiz-step-2">
+                    <div class="quiz-progress"><div class="quiz-progress-bar" style="width: 66%"></div></div>
+                    <h3 class="quiz-question">2. ¿Qué perfil de sabor prefieres?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="sweet">
+                            <i class="fa-solid fa-cookie"></i>
+                            <span>Dulce y Cremoso</span>
+                            <p>Notas a caramelo, vainilla y leche densa.</p>
+                        </div>
+                        <div class="quiz-option" data-answer="acid">
+                            <i class="fa-solid fa-lemon"></i>
+                            <span>Cítrico y Floral</span>
+                            <p>Sensación de frescura, frutas rojas y acidez viva.</p>
+                        </div>
+                        <div class="quiz-option" data-answer="strong">
+                            <i class="fa-solid fa-fire-burner"></i>
+                            <span>Fuerte y Con Cuerpo</span>
+                            <p>Sabor intenso, chocolate amargo y tueste marcado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="quiz-steps" id="quiz-step-3">
+                    <div class="quiz-progress"><div class="quiz-progress-bar" style="width: 100%"></div></div>
+                    <h3 class="quiz-question">3. ¿Cómo complementas tu rutina cafetera?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="pastry">
+                            <i class="fa-solid fa-bread-slice"></i>
+                            <span>Con Repostería</span>
+                            <p>Siempre me gusta acompañarlo de algo dulce.</p>
+                        </div>
+                        <div class="quiz-option" data-answer="pure">
+                            <i class="fa-solid fa-droplet"></i>
+                            <span>Puro / Solo Café</span>
+                            <p>Prefiero apreciar los matices del café sin agregados.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados -->
+                <div class="quiz-result" id="quiz-result-screen" style="display: none;">
+                    <h3>¡Hemos encontrado tu pareja perfecta!</h3>
+                    <p class="quiz-result-intro">Basándonos en tus respuestas, este es el producto ideal para ti:</p>
+                    
+                    <div class="result-card" id="recommended-product-card">
+                        <!-- Se llena dinámicamente con JS -->
+                    </div>
+                    
+                    <div class="quiz-result-actions">
+                        <button class="btn btn-outline" id="restart-quiz-btn"><i class="fa-solid fa-rotate-left"></i> Repetir Test</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN NUESTRA HISTORIA (About) -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img-container" id="about-media">
+                    <img src="assets/hero_coffee.png" alt="Proceso de tostado artesanal en Origen" class="about-img">
+                    <div class="about-badge">
+                        <span class="number">100%</span>
+                        <span class="text">Orgánico</span>
+                    </div>
+                </div>
+                
+                <div class="about-content" id="about-text-content">
+                    <span class="hero-subtitle">Desde 2018</span>
+                    <h3>Nacido del amor por los <span>orígenes y la pureza</span></h3>
+                    <p>En Origen, nuestro compromiso empieza en las manos del caficultor. Trabajamos directamente con fincas cooperativas en Etiopía, Colombia y Costa Rica para asegurar un trato justo y granos de calidad excepcional.</p>
+                    <p>Creemos que el café es más que cafeína: es una ceremonia de aromas, temperaturas y encuentros. Por eso cada taza en nuestro local se extrae bajo rigurosos estándares para resaltar lo mejor de cada grano.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <h4>12+</h4>
+                            <p>Orígenes del mundo</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>100k+</h4>
+                            <p>Tazas servidas con pasión</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN TESTIMONIOS (Reviews) -->
+    <section class="testimonials" id="opiniones">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que dicen los <span>Coffee Lovers</span></h2>
+                <p>Nuestra comunidad comparte sus momentos Origen.</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card" id="review-1">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"El Flat White de este lugar es de otro mundo. La microespuma tiene la consistencia perfecta y el sabor del café es sumamente dulce y floral. ¡Un espacio imperdible!"</p>
+                    <div class="client-info">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150" alt="Cliente Sofía" class="client-img">
+                        <div>
+                            <h4 class="client-name">Sofía Martínez</h4>
+                            <span class="client-role">Catadora Aficionada</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card" id="review-2">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Compré los granos de Etiopía Yirgacheffe para prepararlo en mi prensa francesa en casa y la explosión de notas a jazmín es increíble. Envío rápido y tueste fresco."</p>
+                    <div class="client-info">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150" alt="Cliente Alejandro" class="client-img">
+                        <div>
+                            <h4 class="client-name">Alejandro Ruiz</h4>
+                            <span class="client-role">Cliente Recurrente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Pie de Página) -->
+    <footer class="footer" id="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <h4>ORIGEN.</h4>
+                    <p>Llevamos la cultura del café de especialidad a tu taza, respetando la tierra y a quienes la cultivan.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook Origen"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn" aria-label="Instagram Origen"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-btn" aria-label="TikTok Origen"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#menu">Nuestro Menú</a></li>
+                        <li><a href="#quiz">Encuentra tu Café</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Horarios</h4>
+                    <ul class="footer-links">
+                        <li>Lunes a Viernes: 08:00 - 20:00</li>
+                        <li>Sábados: 09:00 - 21:00</li>
+                        <li>Domingos: 09:00 - 18:00</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul class="contact-info">
+                        <li><i class="fa-solid fa-location-dot"></i> Av. de la Especialidad 456, Madrid</li>
+                        <li><i class="fa-solid fa-phone"></i> +34 912 345 678</li>
+                        <li><i class="fa-solid fa-envelope"></i> hola@cafeorigen.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Café Origen. Todos los derechos reservados.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacidad</a>
+                    <a href="#">Términos de Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CARRITO DE COMPRAS LATERAL (Cart Drawer) -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3><i class="fa-solid fa-shopping-bag"></i> Tu Pedido</h3>
+            <button class="close-cart-btn" id="close-cart-btn" aria-label="Cerrar carrito"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <!-- Contenedor de Items del Carrito -->
+        <div class="cart-items" id="cart-items-container">
+            <!-- Caso Vacío por Defecto -->
+            <div class="cart-empty" id="cart-empty-view">
+                <i class="fa-solid fa-mug-hot"></i>
+                <p>Tu carrito está vacío.</p>
+                <p>¡Añade un café delicioso para empezar!</p>
+            </div>
+        </div>
+        
+        <!-- Totales y Acción -->
+        <div class="cart-footer">
+            <div class="cart-totals">
+                <div class="cart-total-row">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="cart-total-row">
+                    <span>Servicio / Envío</span>
+                    <span id="cart-delivery">Gratis</span>
+                </div>
+                <div class="cart-total-row grand-total">
+                    <span>Total</span>
+                    <span id="cart-total-price">$0.00</span>
+                </div>
+            </div>
+            <button class="btn btn-primary checkout-btn" id="checkout-submit-btn">Realizar Pedido</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE COMPRA EXITOSA -->
+    <div class="modal" id="checkout-success-modal">
+        <div class="modal-content">
+            <div class="success-icon-wrapper">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3>¡Pedido Recibido!</h3>
+            <p>Hemos recibido tu orden correctamente y nuestros baristas ya se encuentran preparando tu café con la mayor dedicación.</p>
+            
+            <div class="order-summary-box">
+                <div class="summary-row">
+                    <span>Orden ID:</span>
+                    <span id="summary-order-id">#ORG-9823</span>
+                </div>
+                <div class="summary-row">
+                    <span>Artículos:</span>
+                    <span id="summary-items-count">0 items</span>
+                </div>
+                <div class="summary-row">
+                    <span>Total abonado:</span>
+                    <span id="summary-total-price">$0.00</span>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="modal-close-btn" style="width: 100%;">Volver al Inicio</button>
+        </div>
+    </div>
+
+    <!-- Scripts de Interacción -->
+    <script src="app.js"></script>
+</body>
+</html>
