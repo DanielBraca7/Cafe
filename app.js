@@ -1,6 +1,6 @@
 /**
- * LÓGICA DE INTERACCIÓN - CAFÉ DE ESPECIALIDAD "ORIGEN"
- * Control de Carrito de Compras, Quiz de Café y Filtros de Productos
+ * LÓGICA DE INTERACCIÓN - FIDELIZA B2B SAAS
+ * Control de Presupuesto/Configurador, Recomendador de Estrategia y Filtros
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainNav = document.getElementById('main-nav');
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // Carrito
+    // Configurador (Carrito)
     const cartToggleBtn = document.getElementById('cart-toggle-btn');
     const closeCartBtn = document.getElementById('close-cart-btn');
     const cartDrawer = document.getElementById('cart-drawer');
@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartTotalPrice = document.getElementById('cart-total-price');
     const checkoutSubmitBtn = document.getElementById('checkout-submit-btn');
     
-    // Filtros de Productos
+    // Filtros de Planes/Módulos
     const filterButtons = document.querySelectorAll('.filter-btn');
     const productCards = document.querySelectorAll('.product-card');
     
-    // Quiz de Café
+    // Quiz de Recomendación
     const quizIntroScreen = document.getElementById('quiz-intro-screen');
     const startQuizBtn = document.getElementById('start-quiz-btn');
     const quizSteps = document.querySelectorAll('.quiz-steps');
@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const summaryTotalPrice = document.getElementById('summary-total-price');
     const modalCloseBtn = document.getElementById('modal-close-btn');
 
-    // Estado del Carrito
-    let cart = JSON.parse(localStorage.getItem('origen_cart')) || [];
+    // Estado del Configurador (Carrito)
+    let cart = JSON.parse(localStorage.getItem('fideliza_cart')) || [];
 
     // ==========================================
     // 2. CABECERA & DISEÑO RESPONSIVE
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cerrar menú móvil al hacer click en enlaces
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', () => {
             // Remover active de todos y agregar al clickeado
             navLinks.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
@@ -88,17 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 3. LÓGICA DEL CARRITO DE COMPRAS
+    // 3. LÓGICA DEL CONFIGURADOR DE SUSCRIPCIÓN
     // ==========================================
     
-    // Abrir Carrito
+    // Abrir Configurador
     function openCart() {
         cartDrawer.classList.add('open');
         cartOverlay.classList.add('open');
         document.body.style.overflow = 'hidden'; // Evita scroll de fondo
     }
 
-    // Cerrar Carrito
+    // Cerrar Configurador
     function closeCart() {
         cartDrawer.classList.remove('open');
         cartOverlay.classList.remove('open');
@@ -109,13 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
     closeCartBtn.addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
-    // Guardar carrito en LocalStorage
+    // Guardar configurador en LocalStorage
     function saveCart() {
-        localStorage.setItem('origen_cart', JSON.stringify(cart));
+        localStorage.setItem('fideliza_cart', JSON.stringify(cart));
         updateCartUI();
     }
 
-    // Añadir artículo al carrito
+    // Añadir plan/módulo al configurador
     function addToCart(id, name, price, img) {
         const existingItem = cart.find(item => item.id === id);
         
@@ -132,12 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         saveCart();
         
-        // Micro-animación en el icono de carrito del header
+        // Micro-animación en el icono del header
         cartToggleBtn.classList.add('pulse-anim');
         setTimeout(() => cartToggleBtn.classList.remove('pulse-anim'), 400);
     }
 
-    // Cambiar cantidad de un artículo
+    // Cambiar cantidad de licencias/módulos
     function updateQuantity(id, change) {
         const item = cart.find(item => item.id === id);
         if (item) {
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveCart();
     }
 
-    // Actualizar UI del Carrito
+    // Actualizar UI del Configurador
     function updateCartUI() {
         // Limpiar items existentes excepto el empty view
         const items = cartItemsContainer.querySelectorAll('.cart-item');
@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cartEmptyView.style.display = 'flex';
             cartBadgeCount.classList.remove('has-items');
             cartBadgeCount.textContent = '0';
-            cartSubtotal.textContent = '$0.00';
-            cartTotalPrice.textContent = '$0.00';
+            cartSubtotal.textContent = '€0.00';
+            cartTotalPrice.textContent = '€0.00';
         } else {
             cartEmptyView.style.display = 'none';
             
@@ -184,14 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${item.img}" alt="${item.name}" class="cart-item-img">
                     <div class="cart-item-details">
                         <h4 class="cart-item-title">${item.name}</h4>
-                        <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+                        <span class="cart-item-price">${item.price.toFixed(2)}</span>
                         <div class="cart-item-actions">
                             <div class="quantity-controller">
                                 <button class="qty-btn minus-btn" data-id="${item.id}"><i class="fa-solid fa-minus"></i></button>
                                 <span class="qty-val">${item.quantity}</span>
                                 <button class="qty-btn plus-btn" data-id="${item.id}"><i class="fa-solid fa-plus"></i></button>
                             </div>
-                            <button class="remove-item-btn" data-id="${item.id}" aria-label="Eliminar artículo"><i class="fa-solid fa-trash-can"></i></button>
+                            <button class="remove-item-btn" data-id="${item.id}" aria-label="Eliminar módulo"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     </div>
                 `;
@@ -201,12 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Actualizar Contadores y Precios
             cartBadgeCount.textContent = totalCount;
             cartBadgeCount.classList.add('has-items');
-            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-            cartTotalPrice.textContent = `$${subtotal.toFixed(2)}`;
+            cartSubtotal.textContent = `€${subtotal.toFixed(2)}`;
+            cartTotalPrice.textContent = `€${subtotal.toFixed(2)}`;
         }
     }
 
-    // Delegación de Eventos en el contenedor del carrito
+    // Delegación de Eventos en el configurador
     cartItemsContainer.addEventListener('click', (e) => {
         const target = e.target.closest('button');
         if (!target) return;
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Manejar clicks en botones "Añadir al carrito" de la tienda
+    // Manejar clicks en botones "Añadir al configurador"
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.add-to-cart-btn');
         if (!btn) return;
@@ -232,11 +232,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const img = btn.getAttribute('data-img');
 
         addToCart(id, name, price, img);
-        openCart(); // Opcional: abre el carrito tras añadir
+        openCart(); // Abre el configurador tras añadir
     });
 
     // ==========================================
-    // 4. DYNAMIC FILTERING DE PRODUCTOS
+    // 4. FILTRADO DINÁMICO DE PLANES Y MÓDULOS
     // ==========================================
     
     filterButtons.forEach(btn => {
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
             productCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
                 
-                // Animación de ocultar/mostrar fluida
+                // Animación de ocultar/mostrar
                 if (category === 'all' || cardCategory === category) {
                     card.style.display = 'flex';
                     setTimeout(() => {
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 50);
                 } else {
                     card.style.opacity = '0';
-                    card.style.transform = 'scale(0.9)';
+                    card.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         card.style.display = 'none';
                     }, 300);
@@ -268,14 +268,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 5. QUIZ DE RECOMENDACIÓN DE CAFÉ
+    // 5. QUIZ DE ESTRATEGIA RECOMENDADA
     // ==========================================
     
     let currentQuizStep = 0;
     const quizAnswers = {
-        type: '',     // hot, cold, grains
-        flavor: '',   // sweet, acid, strong
-        addons: ''    // pastry, pure
+        type: '',     // hot (restauración), cold (retail), grains (ecommerce)
+        flavor: '',   // sweet (<500), acid (500-2000), strong (>2000)
+        addons: ''    // pastry (retener/WhatsApp), pure (analíticas/TPV)
     };
 
     // Comenzar Quiz
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stepContainer.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
             option.classList.add('selected');
 
-            // Retraso corto antes de cambiar para ver el feedback de selección
+            // Retraso corto para mostrar feedback de selección
             setTimeout(() => {
                 stepContainer.classList.remove('active');
                 
@@ -309,70 +309,70 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentQuizStep = stepIndex + 1;
                     document.getElementById(`quiz-step-${currentQuizStep}`).classList.add('active');
                 } else {
-                    // Fin del quiz, calcular recomendación
+                    // Fin del quiz, calcular recomendación SaaS
                     showQuizRecommendation();
                 }
             }, 350);
         });
     });
 
-    // Algoritmo de recomendación
+    // Algoritmo de recomendación B2B
     function showQuizRecommendation() {
         quizResultScreen.style.display = 'block';
         
         let recommendation = {};
 
-        // Lógica de decisiones
-        if (quizAnswers.type === 'grains') {
+        // Lógica de decisiones del configurador inteligente
+        if (quizAnswers.flavor === 'strong') {
             recommendation = {
-                id: 1,
-                name: 'Etiopía Yirgacheffe (250g)',
-                desc: 'Un café de especialidad con perfil cítrico, notas florales limpias de jazmín y acidez brillante. Perfecto para amantes del café de filtro.',
-                price: '24.00',
-                img: 'assets/coffee_bag.png'
+                id: 3,
+                name: 'Plan Enterprise',
+                desc: 'La solución definitiva para multi-sucursales o franquicias con más de 2000 clientes/mes. Incluye infraestructura exclusiva, dominio personalizado para tus tarjetas y soporte VIP prioritario.',
+                price: '199.00',
+                img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=350&auto=format&fit=crop'
             };
-        } else if (quizAnswers.type === 'cold') {
-            if (quizAnswers.addons === 'pastry') {
-                recommendation = {
-                    id: 6,
-                    name: 'Croissant de Pistacho',
-                    desc: 'Perfecto acompañamiento crujiente. Relleno de una densa crema de pistachos sicilianos, ideal con cualquier café frío sin endulzar.',
-                    price: '6.00',
-                    img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=350&auto=format&fit=crop'
-                };
-            } else {
-                recommendation = {
-                    id: 5,
-                    name: 'Cold Brew Infundido',
-                    desc: 'Extraído en frío pacientemente. Sabor redondo, baja acidez y cuerpo ligero. Ideal para hidratar tus tardes soleadas.',
-                    price: '5.00',
-                    img: 'https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?q=80&w=350&auto=format&fit=crop'
-                };
-            }
-        } else { // caliente
-            if (quizAnswers.flavor === 'sweet') {
-                recommendation = {
-                    id: 3,
-                    name: 'Capuchino Italiano',
-                    desc: 'Con una crema aterciopelada y dulce por el propio vaporizado de la leche. Consistencia perfecta para abrazar tus mañanas.',
-                    price: '4.50',
-                    img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=350&auto=format&fit=crop'
-                };
-            } else if (quizAnswers.flavor === 'strong') {
-                recommendation = {
-                    id: 2,
-                    name: 'Espresso Doble',
-                    desc: 'Intenso, aromático y con una rica capa de crema color avellana. Para quienes aprecian la fuerza pura del grano.',
-                    price: '3.50',
-                    img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=350&auto=format&fit=crop'
-                };
-            } else {
+        } else if (quizAnswers.addons === 'pastry') {
+            if (quizAnswers.type === 'hot') {
                 recommendation = {
                     id: 4,
-                    name: 'Flat White Velvet',
-                    desc: 'Doble ristretto suavemente mezclado con microespuma de leche sedosa. Un balance exquisito entre fuerza y textura cremosa.',
-                    price: '4.80',
-                    img: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=350&auto=format&fit=crop'
+                    name: 'Módulo WhatsApp API',
+                    desc: 'Perfecto para enviar recordatorios de puntos y ofertas de cumpleaños automatizadas por WhatsApp oficial directo a los clientes de tu local de restauración.',
+                    price: '15.00',
+                    img: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?q=80&w=350&auto=format&fit=crop'
+                };
+            } else {
+                recommendation = {
+                    id: 2,
+                    name: 'Plan Growth',
+                    desc: 'La opción recomendada para comercios minoristas y retail. Automatiza la retención de clientes con email marketing integrado y segmentación avanzada por comportamiento.',
+                    price: '79.00',
+                    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
+                };
+            }
+        } else { // pure
+            if (quizAnswers.type === 'cold') {
+                recommendation = {
+                    id: 6,
+                    name: 'Integración TPV / POS',
+                    desc: 'La herramienta óptima para tu tienda física. Conecta Fideliza con tu terminal de cobro (TPV) para asignar puntos en tiempo real a cada cliente al pagar en caja.',
+                    price: '20.00',
+                    img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=350&auto=format&fit=crop'
+                };
+            } else if (quizAnswers.type === 'grains') {
+                recommendation = {
+                    id: 5,
+                    name: 'Módulo AI Analytics',
+                    desc: 'Ideal para e-commerce y negocios digitales. Implementa algoritmos de IA predictiva que detectan patrones de abandono de tus usuarios recurrentes.',
+                    price: '25.00',
+                    img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=350&auto=format&fit=crop'
+                };
+            } else {
+                recommendation = {
+                    id: 1,
+                    name: 'Plan Starter',
+                    desc: 'El plan básico inicial idóneo para hostelería local pequeña. Incluye tarjetas de fidelización QR personalizadas para empezar sin complicaciones.',
+                    price: '29.00',
+                    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
                 };
             }
         }
@@ -380,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Renderizar tarjeta recomendada
         recommendedProductCard.innerHTML = `
             <img src="${recommendation.img}" alt="${recommendation.name}" class="result-image">
-            <span class="product-category">Nuestra Recomendación</span>
+            <span class="product-category">Estrategia Recomendada</span>
             <div class="result-name">${recommendation.name}</div>
             <p class="result-desc">${recommendation.desc}</p>
             <div class="result-price">${recommendation.price}</div>
@@ -389,11 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 data-name="${recommendation.name}" 
                 data-price="${recommendation.price}" 
                 data-img="${recommendation.img}">
-                Añadir a mi Orden
+                Añadir a mi Suscripción
             </button>
         `;
 
-        // Event listener para el botón dinámico de añadir al carrito
+        // Event listener para el botón dinámico de añadir recomendación
         document.getElementById('add-quiz-recommendation-btn').addEventListener('click', (e) => {
             const btn = e.target;
             addToCart(
@@ -420,12 +420,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     checkoutSubmitBtn.addEventListener('click', () => {
         if (cart.length === 0) {
-            alert('Añade productos a tu orden antes de realizar el pedido.');
+            alert('Añade un plan o módulos a tu suscripción antes de contratar.');
             return;
         }
 
-        // Crear resumen en el modal
-        const randomOrderId = '#ORG-' + Math.floor(1000 + Math.random() * 9000);
+        // Crear resumen en el modal de éxito
+        const randomOrderId = '#FID-' + Math.floor(1000 + Math.random() * 9000);
         let itemsCount = 0;
         let total = 0;
         
@@ -435,16 +435,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         summaryOrderId.textContent = randomOrderId;
-        summaryItemsCount.textContent = `${itemsCount} producto(s)`;
-        summaryTotalPrice.textContent = `$${total.toFixed(2)}`;
+        summaryItemsCount.textContent = `${itemsCount} plan(es) / módulo(s)`;
+        summaryTotalPrice.textContent = `€${total.toFixed(2)}`;
 
-        // Cerrar carrito
+        // Cerrar configurador
         closeCart();
 
-        // Abrir Modal
+        // Abrir Modal de éxito
         checkoutSuccessModal.classList.add('open');
 
-        // Limpiar Carrito del Estado y LocalStorage
+        // Limpiar configurador local
         cart = [];
         saveCart();
     });
@@ -454,15 +454,11 @@ document.addEventListener('DOMContentLoaded', () => {
         checkoutSuccessModal.classList.remove('open');
     });
 
-    // ==========================================
-    // 7. INICIALIZACIONES
-    // ==========================================
-    
-    // Iniciar UI del carrito por si tiene datos en LocalStorage
+    // Iniciar UI por si hay datos guardados
     updateCartUI();
 });
 
-// Estilos de animación personalizados para pulso del botón
+// Estilos de animación para pulso del botón
 const style = document.createElement('style');
 style.textContent = `
     @keyframes pulseBtn {
