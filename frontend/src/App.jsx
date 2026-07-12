@@ -602,7 +602,7 @@ function App() {
           
           <div className="flex items-center gap-4">
             <button 
-              className="hidden sm:inline-flex items-center gap-1.5 px-4.5 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+              className="hidden sm:inline-flex items-center gap-1.5 px-6 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
               onClick={() => { setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
             >
               <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
