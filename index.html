@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1040/1040230.png">
     
     <!-- Hojas de estilo -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.1.1">
     
     <!-- FontAwesome para iconos de alta calidad -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,7 +21,8 @@
     <header class="header" id="main-header">
         <div class="container">
             <a href="#inicio" class="logo" id="logo-brand">
-                <i class="fa-solid fa-handshake"></i> 2Gether<span>Rewards</span>
+                <img src="logo-handshake.png" alt="2Gether Rewards Logo" class="brand-handshake-img">
+                2Gether<span>Rewards</span>
             </a>
             
             <nav class="nav" id="main-nav">
@@ -56,9 +57,43 @@
                     <a href="#menu" class="btn btn-primary" id="hero-cta-menu">Ver Planes</a>
                     <a href="#quiz" class="btn btn-outline" id="hero-cta-quiz"><i class="fa-solid fa-wand-magic-sparkles"></i> ¿Cuál es mi Plan Ideal?</a>
                 </div>
-                <div class="hero-wallets">
-                    <span><i class="fa-brands fa-apple"></i> Apple Wallet</span>
-                    <span><i class="fa-solid fa-wallet"></i> Google Wallet</span>
+
+            </div>
+            
+            <div class="hero-visual">
+                <div class="wallet-container">
+                    <div class="apple-wallet-card">
+                        <div class="card-header">
+                            <div class="card-brand">
+                                <img src="logo-handshake.png" alt="2Gether Rewards Logo" class="card-handshake-img">
+                                <span class="card-brand-name">2Gether<span>Rewards</span></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Card Banner (Cloudinary Logo Image) -->
+                        <div class="card-banner">
+                            <img src="https://res.cloudinary.com/dvmrbrrba/image/upload/v1781316175/LOGO_2GETHER_REWARDS-13_rlmvfq.png" alt="2Gether Rewards Banner" class="card-banner-img">
+                        </div>
+
+                        <!-- Card Info & QR Body -->
+                        <div class="card-info-body">
+                            <div class="card-fields">
+                                <div class="card-field field-left">
+                                    <span class="field-label">SELLOS</span>
+                                    <span class="field-value">6/6</span>
+                                </div>
+                                <div class="card-field field-right">
+                                    <span class="field-label">PREMIO</span>
+                                    <span class="field-value">1</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Real QR Code -->
+                            <div class="qr-code-section">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://2getherrewards.com" alt="2Gether Rewards QR Code" class="qr-code-img">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -519,15 +554,6 @@
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4>Planes</h4>
-                    <ul class="footer-links">
-                        <li><a href="#menu">Plan START — $49/mes</a></li>
-                        <li><a href="#menu">Plan GROWTH — $69/mes</a></li>
-                        <li><a href="#menu">Plan ENTERPRISE — $99/mes</a></li>
-                        <li><a href="#addon-social">Add-on Redes Sociales</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
                     <h4>Plataforma</h4>
                     <ul class="footer-links">
                         <li><a href="#tarjetas">Tipos de Tarjeta</a></li>
@@ -541,7 +567,6 @@
                     <ul class="contact-info">
                         <li><i class="fa-solid fa-envelope"></i> info@2getherrewards.com</li>
                         <li><i class="fa-solid fa-globe"></i> www.2getherrewards.com</li>
-                        <li><i class="fa-brands fa-whatsapp"></i> Contáctanos por WhatsApp</li>
                     </ul>
                 </div>
             </div>
