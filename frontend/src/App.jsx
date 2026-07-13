@@ -1533,17 +1533,6 @@ function App() {
               <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
             </button>
             <button 
-              className={`relative p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition-transform duration-200 active:scale-95 ${cartPulse ? 'animate-bounce' : ''}`} 
-              id="cart-toggle-btn" 
-              onClick={openCart} 
-              aria-label="Abrir configurador de suscripción"
-            >
-              <i className="fa-solid fa-sliders text-gray-600 text-lg"></i>
-              <span className={`absolute -top-1 -right-1 h-5 w-5 rounded-full flex items-center justify-center text-[0.7rem] font-bold text-white transition-opacity duration-200 ${cartTotalItems > 0 ? 'bg-primary opacity-100' : 'bg-transparent opacity-0'}`} id="cart-badge-count">
-                {cartTotalItems}
-              </span>
-            </button>
-            <button 
               className="lg:hidden p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50" 
               id="mobile-menu-btn" 
               onClick={() => setIsMobileMenuOpen(prev => !prev)}
