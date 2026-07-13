@@ -533,41 +533,131 @@ function App() {
             {/* 1. VISTA GENERAL (DASHBOARD METRICS VIEW) */}
             {dashboardTab === 'Vista General' && (
               <div className="space-y-8">
-                <h1 className="font-heading text-3xl font-black text-gray-900 leading-none">Vista General</h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <h1 className="font-heading text-3xl font-black text-gray-900 leading-none text-left">Dashboard</h1>
+                
+                {/* Row 1 (4 columns) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
-                    { name: 'MIEMBROS TOTALES', value: '22', icon: 'fa-users' },
-                    { name: 'NUEVOS MIEMBROS (30 DÍAS)', value: '15', sub: '68% del total', icon: 'fa-user-plus' },
-                    { name: 'MIEMBROS ACTIVOS', value: '4', sub: '18% de retención', icon: 'fa-wave-square' },
-                    { name: 'ESCANEOS TOTALES', value: '24', sub: '~6.0 por miembro activo', icon: 'fa-qrcode' },
-                    { name: 'PREMIOS CANJEADOS', value: '8', sub: '36% de conversión', icon: 'fa-gift' },
-                    { name: 'MIEMBROS SIN VISITAS', value: '17', sub: '77% inactivos', icon: 'fa-user-slash' }
+                    { name: 'TOTAL MEMBERS', value: '22', icon: 'fa-users' },
+                    { name: 'NEW MEMBERS (30 DAYS)', value: '14', sub: '64% of total', icon: 'fa-user-plus' },
+                    { name: 'ACTIVE MEMBERS', value: '4', sub: '18% retention rate', icon: 'fa-wave-square' },
+                    { name: 'TOTAL SCANS', value: '24', sub: '--6.0 per active member', icon: 'fa-qrcode' }
                   ].map((card) => (
                     <div key={card.name} className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow">
-                      <div className="h-12 w-12 rounded-2xl bg-gray-100/80 text-gray-500 flex items-center justify-center text-lg shrink-0">
+                      <div className="h-14 w-14 rounded-2xl bg-gray-100/70 text-gray-500 flex items-center justify-center text-xl shrink-0">
                         <i className={`fa-solid ${card.icon}`}></i>
                       </div>
-                      <div className="space-y-1">
-                        <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase">{card.name}</span>
-                        <span className="block text-2xl font-black text-gray-900 leading-none">{card.value}</span>
-                        {card.sub && <span className="block text-xs font-bold text-primary mt-0.5">{card.sub}</span>}
+                      <div className="space-y-1 text-left">
+                        <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase leading-none">{card.name}</span>
+                        <span className="block text-3xl font-black text-gray-900 leading-none">{card.value}</span>
+                        {card.sub && <span className="block text-xs font-bold text-primary mt-1">{card.sub}</span>}
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-center pt-2">
-                  <div className="w-full md:max-w-sm bg-white rounded-3xl border border-gray-150 p-6 shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow text-left">
-                    <div className="h-12 w-12 rounded-2xl bg-gray-100/80 text-gray-500 flex items-center justify-center text-lg shrink-0">
-                      <i className="fa-solid fa-sack-dollar"></i>
+
+                {/* Row 2 (3 columns, centered layout on wide viewports) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mt-6">
+                  {[
+                    { name: 'REWARDS REDEEMED', value: '8', sub: '36% conversion rate', icon: 'fa-gift' },
+                    { name: 'MEMBERS WITH NO VISITS', value: '17', sub: '77% Inactive', icon: 'fa-user-slash' },
+                    { name: 'TOTAL REVENUE', value: '3565$', icon: 'fa-sack-dollar' }
+                  ].map((card) => (
+                    <div key={card.name} className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow">
+                      <div className="h-14 w-14 rounded-2xl bg-gray-100/70 text-gray-500 flex items-center justify-center text-xl shrink-0">
+                        <i className={`fa-solid ${card.icon}`}></i>
+                      </div>
+                      <div className="space-y-1 text-left">
+                        <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase leading-none">{card.name}</span>
+                        <span className="block text-3xl font-black text-gray-900 leading-none">{card.value}</span>
+                        {card.sub && <span className="block text-xs font-bold text-primary mt-1">{card.sub}</span>}
+                      </div>
                     </div>
-                    <div className="space-y-1 text-left">
-                      <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase">INGRESOS TOTALES</span>
-                      <span className="block text-2xl font-black text-gray-900 leading-none">3565$</span>
+                  ))}
+                </div>
+
+                {/* Member Growth Chart Card */}
+                <div className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm space-y-6 mt-8">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100 pb-4">
+                    <div className="flex items-center gap-2 text-left border-l-4 border-primary pl-3">
+                      <div className="space-y-1">
+                        <h3 className="font-heading font-black text-lg text-gray-900 leading-none">Member Growth</h3>
+                        <p className="text-gray-400 text-xs font-semibold">Real data from the last 12 days</p>
+                      </div>
+                    </div>
+                    
+                    {/* Right filters */}
+                    <div className="flex flex-col items-end gap-2.5 w-full sm:w-auto">
+                      {/* Tab control 1 */}
+                      <div className="flex bg-charcoal text-white rounded-xl p-1 text-[0.65rem] font-bold">
+                        <span className="px-3.5 py-1 bg-white text-charcoal rounded-lg shadow-sm cursor-pointer">Members</span>
+                        <span className="px-3.5 py-1 cursor-pointer hover:text-gray-300">Scanner</span>
+                        <span className="px-3.5 py-1 cursor-pointer hover:text-gray-300">Gift</span>
+                        <span className="px-3.5 py-1 cursor-pointer hover:text-gray-300">Revenue</span>
+                      </div>
+                      {/* Tab control 2 */}
+                      <div className="flex bg-gray-100 text-gray-500 rounded-xl p-1 text-[0.65rem] font-bold">
+                        <span className="px-3 py-1 bg-white text-charcoal rounded-lg shadow-sm cursor-pointer">Growth</span>
+                        <span className="px-3 py-1 cursor-pointer hover:text-gray-750">Age</span>
+                        <span className="px-3 py-1 cursor-pointer hover:text-gray-750">Top Clients</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bezier SVG Line Chart */}
+                  <div className="h-64 w-full relative pt-4 text-left">
+                    <svg className="w-full h-full" viewBox="0 0 1000 240" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#69BFA1" stopOpacity="0.4" />
+                          <stop offset="100%" stopColor="#69BFA1" stopOpacity="0.0" />
+                        </linearGradient>
+                      </defs>
+                      
+                      {/* Grid Y lines */}
+                      <line x1="50" y1="30" x2="950" y2="30" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
+                      <line x1="50" y1="80" x2="950" y2="80" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
+                      <line x1="50" y1="130" x2="950" y2="130" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
+                      <line x1="50" y1="180" x2="950" y2="180" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
+                      
+                      {/* Fill area */}
+                      <path 
+                        d="M 50 180 C 130 170, 210 160, 290 140 C 370 120, 450 110, 530 80 C 610 50, 690 60, 770 40 C 850 20, 900 30, 950 30 L 950 180 Z" 
+                        fill="url(#chart-grad)" 
+                      />
+
+                      {/* Bezier Line stroke */}
+                      <path 
+                        d="M 50 180 C 130 170, 210 160, 290 140 C 370 120, 450 110, 530 80 C 610 50, 690 60, 770 40 C 850 20, 900 30, 950 30" 
+                        fill="none" 
+                        stroke="#69BFA1" 
+                        strokeWidth="4" 
+                        strokeLinecap="round"
+                      />
+
+                      {/* Nodes */}
+                      <circle cx="50" cy="180" r="5" fill="#69BFA1" stroke="#fff" strokeWidth="2" />
+                      <circle cx="290" cy="140" r="5" fill="#69BFA1" stroke="#fff" strokeWidth="2" />
+                      <circle cx="530" cy="80" r="5" fill="#69BFA1" stroke="#fff" strokeWidth="2" />
+                      <circle cx="770" cy="40" r="5" fill="#69BFA1" stroke="#fff" strokeWidth="2" />
+                      <circle cx="950" cy="30" r="5" fill="#69BFA1" stroke="#fff" strokeWidth="2" />
+                    </svg>
+
+                    {/* X-axis Labels */}
+                    <div className="flex justify-between text-[0.65rem] text-gray-400 font-bold px-8 pt-2">
+                      <span>Jul 1</span>
+                      <span>Jul 3</span>
+                      <span>Jul 5</span>
+                      <span>Jul 7</span>
+                      <span>Jul 9</span>
+                      <span>Jul 11</span>
+                      <span>Jul 12</span>
                     </div>
                   </div>
                 </div>
               </div>
             )}
+
 
             {/* 2. MEMBERS DIRECTORY PAGE VIEW */}
             {dashboardTab === 'Miembros' && (
