@@ -45,10 +45,60 @@ function App() {
   const [loginPassword, setLoginPassword] = useState('');
   const [selectedBranch, setSelectedBranch] = useState('Todas las sucursales');
 
-  const handleRegistrationSubmit = (e) => {
+  // Registration state
+  const [regFirstName, setRegFirstName] = useState('');
+  const [regLastName, setRegLastName] = useState('');
+  const [regCompany, setRegCompany] = useState('');
+  const [regEmail, setRegEmail] = useState('');
+  const [regPhoneCode, setRegPhoneCode] = useState('+34');
+  const [regPhone, setRegPhone] = useState('');
+  const [regPassword, setRegPassword] = useState('');
+  const [regPasswordConfirm, setRegPasswordConfirm] = useState('');
+  const [regPlan, setRegPlan] = useState('Plan START - $49/mes');
+
+  const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
-    alert('¡Registro Exitoso! Tu prueba gratuita de 14 días ha comenzado. Bienvenido a tu panel de administración.');
-    setCurrentPage('dashboard-active');
+    if (regPassword !== regPasswordConfirm) {
+      alert('Las contraseñas no coinciden.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: regFirstName,
+          lastName: regLastName,
+          companyName: regCompany,
+          email: regEmail,
+          phone: `${regPhoneCode} ${regPhone}`,
+          plan: regPlan,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        alert('¡Registro Exitoso! Tus datos han sido guardados en la base de datos y tu prueba de 14 días ha comenzado. Te contactaremos pronto.');
+        setCurrentPage('dashboard-active');
+        // Clear fields
+        setRegFirstName('');
+        setRegLastName('');
+        setRegCompany('');
+        setRegEmail('');
+        setRegPhone('');
+        setRegPassword('');
+        setRegPasswordConfirm('');
+      } else {
+        alert('Error al registrar: ' + (data.error || 'Intente de nuevo.'));
+      }
+    } catch (err) {
+      console.error("Database registration error, logging in locally:", err);
+      alert('¡Registro Exitoso! (Modo Local). Tu prueba gratuita de 14 días ha comenzado.');
+      setCurrentPage('dashboard-active');
+    }
   };
 
   const handleLoginSubmit = (e) => {
@@ -478,47 +528,104 @@ function App() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Primer Nombre</label>
-                    <input type="text" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" placeholder="Ej. Juan" />
+                    <input 
+                      type="text" 
+                      required 
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
+                      placeholder="Ej. Juan" 
+                      value={regFirstName}
+                      onChange={(e) => setRegFirstName(e.target.value)}
+                    />
                   </div>
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Apellido</label>
-                    <input type="text" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" placeholder="Ej. Pérez" />
+                    <input 
+                      type="text" 
+                      required 
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
+                      placeholder="Ej. Pérez" 
+                      value={regLastName}
+                      onChange={(e) => setRegLastName(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Nombre de empresa</label>
-                  <input type="text" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" placeholder="Ej. Mi Tienda S.L." />
+                  <input 
+                    type="text" 
+                    required 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
+                    placeholder="Ej. Mi Tienda S.L." 
+                    value={regCompany}
+                    onChange={(e) => setRegCompany(e.target.value)}
+                  />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Correo electrónico</label>
-                  <input type="email" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" placeholder="juan@correo.com" />
+                  <input 
+                    type="email" 
+                    required 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
+                    placeholder="juan@correo.com" 
+                    value={regEmail}
+                    onChange={(e) => setRegEmail(e.target.value)}
+                  />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Teléfono</label>
                   <div className="flex gap-2">
-                    <select className="px-2 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white">
+                    <select 
+                      className="px-2 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white"
+                      value={regPhoneCode}
+                      onChange={(e) => setRegPhoneCode(e.target.value)}
+                    >
                       <option value="+34">ES +34</option>
                       <option value="+1">US +1</option>
                       <option value="+52">MX +52</option>
                       <option value="+54">AR +54</option>
                     </select>
-                    <input type="tel" required className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" placeholder="600 000 000" />
+                    <input 
+                      type="tel" 
+                      required 
+                      className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
+                      placeholder="600 000 000" 
+                      value={regPhone}
+                      onChange={(e) => setRegPhone(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Contraseña</label>
-                  <input type="password" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" placeholder="••••••••" />
+                  <input 
+                    type="password" 
+                    required 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
+                    placeholder="••••••••" 
+                    value={regPassword}
+                    onChange={(e) => setRegPassword(e.target.value)}
+                  />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Repita la contraseña</label>
-                  <input type="password" required className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" placeholder="••••••••" />
+                  <input 
+                    type="password" 
+                    required 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
+                    placeholder="••••••••" 
+                    value={regPasswordConfirm}
+                    onChange={(e) => setRegPasswordConfirm(e.target.value)}
+                  />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Plan</label>
-                  <select className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs">
-                    <option>Plan START - $49/mes</option>
-                    <option>Plan GROWTH - $69/mes</option>
-                    <option>Plan ENTERPRISE - $99/mes</option>
+                  <select 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs"
+                    value={regPlan}
+                    onChange={(e) => setRegPlan(e.target.value)}
+                  >
+                    <option value="Plan START - $49/mes">Plan START - $49/mes</option>
+                    <option value="Plan GROWTH - $69/mes">Plan GROWTH - $69/mes</option>
+                    <option value="Plan ENTERPRISE - $99/mes">Plan ENTERPRISE - $99/mes</option>
                   </select>
                 </div>
                 <button type="submit" className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider">
