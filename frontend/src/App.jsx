@@ -76,6 +76,7 @@ function App() {
           email: regEmail,
           phone: `${regPhoneCode} ${regPhone}`,
           plan: regPlan,
+          password: regPassword,
         }),
       });
 

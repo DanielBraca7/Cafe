@@ -36,12 +36,24 @@ if (dbUrl) {
                 email VARCHAR(150) UNIQUE,
                 phone VARCHAR(50),
                 plan VARCHAR(100),
+                password VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `;
         pool.query(createTableQuery)
-            .then(() => console.log("Database table 'leads' is ready in MySQL."))
-            .catch(err => console.error("Error creating MySQL table:", err));
+            .then(() => {
+                console.log("Database table 'leads' is ready in MySQL.");
+                // Safe migration: add password column if migrating existing table on Railway
+                return pool.query("ALTER TABLE leads ADD COLUMN password VARCHAR(255) AFTER plan;");
+            })
+            .then(() => console.log("MySQL column 'password' verified/added."))
+            .catch(err => {
+                if (err.errno === 1060 || err.code === 'ER_DUP_FIELDNAME') {
+                    // Ignore duplicate fieldname error
+                } else {
+                    console.error("Error setting up MySQL leads table:", err);
+                }
+            });
     } catch (err) {
         console.error("Error creating MySQL pool:", err);
     }
@@ -64,7 +76,7 @@ app.get('/api/status', (req, res) => {
 
 // Endpoint to store registration lead data
 app.post('/api/register', async (req, res) => {
-    const { firstName, lastName, companyName, email, phone, plan } = req.body;
+    const { firstName, lastName, companyName, email, phone, plan, password } = req.body;
     
     if (!email) {
         return res.status(400).json({ error: 'El correo electrónico es requerido.' });
@@ -73,17 +85,18 @@ app.post('/api/register', async (req, res) => {
     try {
         if (pool) {
             const insertQuery = `
-                INSERT INTO leads (first_name, last_name, company_name, email, phone, plan)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO leads (first_name, last_name, company_name, email, phone, plan, password)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE
                     first_name = VALUES(first_name),
                     last_name = VALUES(last_name),
                     company_name = VALUES(company_name),
                     phone = VALUES(phone),
                     plan = VALUES(plan),
+                    password = VALUES(password),
                     created_at = CURRENT_TIMESTAMP;
             `;
-            await pool.query(insertQuery, [firstName, lastName, companyName, email, phone, plan]);
+            await pool.query(insertQuery, [firstName, lastName, companyName, email, phone, plan, password]);
             
             // Retrieve the record to confirm details
             const [rows] = await pool.query("SELECT * FROM leads WHERE email = ? LIMIT 1;", [email]);
@@ -91,7 +104,7 @@ app.post('/api/register', async (req, res) => {
         } else {
             // Fallback to memory
             const existingIndex = memoryLeads.findIndex(l => l.email === email);
-            const lead = { firstName, lastName, companyName, email, phone, plan, createdAt: new Date() };
+            const lead = { firstName, lastName, companyName, email, phone, plan, password, createdAt: new Date() };
             if (existingIndex > -1) {
                 memoryLeads[existingIndex] = lead;
             } else {
