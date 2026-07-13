@@ -45,6 +45,32 @@ function App() {
   const [loginPassword, setLoginPassword] = useState('');
   const [selectedBranch, setSelectedBranch] = useState('Todas las sucursales');
 
+  // Dashboard sub-page view states
+  const [dashboardTab, setDashboardTab] = useState('Vista General');
+  const [isWalletMenuOpen, setIsWalletMenuOpen] = useState(true);
+
+  // Members filters states
+  const [filterName, setFilterName] = useState('');
+  const [filterEmail, setFilterEmail] = useState('');
+  const [filterPhone, setFilterPhone] = useState('');
+  const [filterSort, setFilterSort] = useState('Newest');
+
+  // Designer states
+  const [walletType, setWalletType] = useState('sellos');
+  const [walletStampsCount, setWalletStampsCount] = useState(6);
+
+  // Scanner states
+  const [scannerActive, setScannerActive] = useState(false);
+  const [scanAmount, setScanAmount] = useState('0.00');
+  const [manualCode, setManualCode] = useState('');
+
+  // Gift Cards states
+  const [giftAmount, setGiftAmount] = useState(50);
+  const [giftVouchers, setGiftVouchers] = useState([
+    { code: 'GC-8172-1082', amount: 50, date: '13/07/2026', status: 'Activa' },
+    { code: 'GC-4921-9921', amount: 150, date: '12/07/2026', status: 'Activa' }
+  ]);
+
   // Registration state
   const [regFirstName, setRegFirstName] = useState('');
   const [regLastName, setRegLastName] = useState('');
@@ -282,6 +308,76 @@ function App() {
   const cartSubtotalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   if (currentPage === 'dashboard-active') {
+    // ----------------------------------------------------
+    // MEMBERS DIRECTORY DATA AND FILTER LOGIC
+    // ----------------------------------------------------
+    const initialMembers = [
+      { name: 'Alejandro Castro', email: 'alejandrocastro@gmail.com', phone: '+34634376254', visits: 0, totalVisits: 0, redeemedRewards: 0, inactivity: '11 días', avatarColor: 'bg-emerald-600' },
+      { name: 'Carlos Mendoza', email: 'carlos.mendoza@gmail.com', phone: '+34612345678', visits: 2, totalVisits: 8, redeemedRewards: 1, inactivity: '3 días', avatarColor: 'bg-teal-600' },
+      { name: 'Laura Martinez', email: 'laura.mar@gmail.com', phone: '+34698765432', visits: 1, totalVisits: 4, redeemedRewards: 0, inactivity: '15 días', avatarColor: 'bg-cyan-600' },
+      { name: 'Sofia Ruiz', email: 'sofia.ruiz@hotmail.com', phone: '+34655443322', visits: 5, totalVisits: 12, redeemedRewards: 2, inactivity: '1 día', avatarColor: 'bg-primary' },
+      { name: 'Javier Lopez', email: 'javier.l@yahoo.com', phone: '+34688990011', visits: 0, totalVisits: 3, redeemedRewards: 0, inactivity: '32 días', avatarColor: 'bg-gray-500' }
+    ];
+
+    const filteredMembers = initialMembers.filter(m => {
+      const matchName = m.name.toLowerCase().includes(filterName.toLowerCase());
+      const matchEmail = m.email.toLowerCase().includes(filterEmail.toLowerCase());
+      const matchPhone = m.phone.includes(filterPhone);
+      return matchName && matchEmail && matchPhone;
+    }).sort((a, b) => {
+      if (filterSort === 'Visitas') {
+        return b.totalVisits - a.totalVisits;
+      }
+      return 0; // Default
+    });
+
+    const handleSendOffer = (email) => {
+      alert(`¡Oferta especial enviada con éxito a ${email}! Se notificará al cliente a través de su Wallet.`);
+    };
+
+    const handleSendBulkOffer = () => {
+      alert("¡Oferta enviada con éxito a todos los miembros inactivos (+1 mes)!");
+    };
+
+    const handleResetFilters = () => {
+      setFilterName('');
+      setFilterEmail('');
+      setFilterPhone('');
+      setFilterSort('Newest');
+    };
+
+    // ----------------------------------------------------
+    // SCANNER EVENT HANDLERS
+    // ----------------------------------------------------
+    const handleSimulateScan = (name) => {
+      alert(`¡Código QR verificado correctamente! Cliente: ${name}. Tarjeta de sellos estampada con éxito. Monto registrado: $${scanAmount || '0.00'}`);
+      setScannerActive(false);
+      setScanAmount('0.00');
+    };
+
+    const handleManualScanSubmit = (e) => {
+      e.preventDefault();
+      if (!manualCode.trim()) return;
+      alert(`¡Código Manual ${manualCode} verificado! Se procesó la visita de forma correcta.`);
+      setManualCode('');
+    };
+
+    // ----------------------------------------------------
+    // GIFT CARDS EVENT HANDLERS
+    // ----------------------------------------------------
+    const handleEmitGiftCard = (e) => {
+      e.preventDefault();
+      const code = `GC-${Math.floor(1000 + Math.random() * 9000)}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const newVoucher = {
+        code,
+        amount: giftAmount,
+        date: new Date().toLocaleDateString('es-ES'),
+        status: 'Activa'
+      };
+      setGiftVouchers(prev => [newVoucher, ...prev]);
+      alert(`¡Tarjeta Regalo por $${giftAmount} emitida con éxito! Código generado: ${code}`);
+    };
+
     return (
       <div className="min-h-screen flex bg-graylight text-charcoal font-body text-left">
         {/* SIDEBAR */}
@@ -302,25 +398,80 @@ function App() {
             
             {/* Nav links */}
             <nav className="flex flex-col gap-1">
-              {[
-                { name: 'Vista General', icon: 'fa-table-cells-large', active: true },
-                { name: 'Miembros', icon: 'fa-users' },
-                { name: 'Diseño Wallet', icon: 'fa-palette', arrow: true },
-                { name: 'Escáner', icon: 'fa-qrcode' },
-                { name: 'Gift Cards', icon: 'fa-gift' },
-                { name: 'Configuración del Sistema', icon: 'fa-gear', arrow: true }
-              ].map((link) => (
+              {/* Dashboard / Vista General */}
+              <button
+                onClick={() => setDashboardTab('Vista General')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${dashboardTab === 'Vista General' ? 'bg-white/15 text-white shadow-sm' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}
+              >
+                <i className="fa-solid fa-table-cells-large text-base shrink-0"></i>
+                <span>Vista General</span>
+              </button>
+
+              {/* Members / Miembros */}
+              <button
+                onClick={() => setDashboardTab('Miembros')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${dashboardTab === 'Miembros' ? 'bg-white/15 text-white shadow-sm' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}
+              >
+                <i className="fa-solid fa-users text-base shrink-0"></i>
+                <span>Miembros</span>
+              </button>
+
+              {/* Diseño Wallet (Expandable Submenu) */}
+              <div>
                 <button
-                  key={link.name}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${link.active ? 'bg-white/15 text-white shadow-sm' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}
+                  onClick={() => setIsWalletMenuOpen(prev => !prev)}
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-white/80 hover:bg-white/10 hover:text-white transition-all"
                 >
                   <div className="flex items-center gap-3">
-                    <i className={`fa-solid ${link.icon} text-base shrink-0`}></i>
-                    <span>{link.name}</span>
+                    <i className="fa-solid fa-palette text-base shrink-0"></i>
+                    <span>Diseño Wallet</span>
                   </div>
-                  {link.arrow && <i className="fa-solid fa-chevron-right text-[0.7rem] opacity-60"></i>}
+                  <i className={`fa-solid fa-chevron-down text-[0.7rem] transition-transform duration-200 ${isWalletMenuOpen ? 'rotate-180' : ''}`}></i>
                 </button>
-              ))}
+                
+                {isWalletMenuOpen && (
+                  <div className="pl-6 flex flex-col gap-1 mt-1">
+                    {[
+                      { name: 'Tarjeta Fidelización', tab: 'Tarjeta Fidelización' }
+                    ].map((sub) => (
+                      <button
+                        key={sub.name}
+                        onClick={() => setDashboardTab(sub.tab)}
+                        className={`w-full text-left px-4 py-2 rounded-lg text-xs font-semibold transition-all ${dashboardTab === sub.tab ? 'bg-white/10 text-white font-bold' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
+                      >
+                        {sub.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Escáner */}
+              <button
+                onClick={() => setDashboardTab('Escáner')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${dashboardTab === 'Escáner' ? 'bg-white/15 text-white shadow-sm' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}
+              >
+                <i className="fa-solid fa-qrcode text-base shrink-0"></i>
+                <span>Escáner</span>
+              </button>
+
+              {/* Gift Cards */}
+              <button
+                onClick={() => setDashboardTab('Gift Cards')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${dashboardTab === 'Gift Cards' ? 'bg-white/15 text-white shadow-sm' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}
+              >
+                <i className="fa-solid fa-gift text-base shrink-0"></i>
+                <span>Gift Cards</span>
+              </button>
+
+              {/* Configuración */}
+              <button
+                onClick={() => setDashboardTab('Configuración del Sistema')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${dashboardTab === 'Configuración del Sistema' ? 'bg-white/15 text-white shadow-sm' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}
+              >
+                <i className="fa-solid fa-gear text-base shrink-0"></i>
+                <span>Configuración del Sistema</span>
+              </button>
             </nav>
           </div>
           
@@ -376,45 +527,621 @@ function App() {
             </div>
           </header>
 
-          {/* DASHBOARD VIEWPORT */}
+          {/* DASHBOARD VIEWPORT CONDITIONAL PAGES */}
           <main className="flex-1 p-8 text-left space-y-8 bg-graylight">
-            <h1 className="font-heading text-3xl font-black text-gray-900 leading-none">Vista General</h1>
             
-            {/* Metrics cards grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { name: 'MIEMBROS TOTALES', value: '22', icon: 'fa-users' },
-                { name: 'NUEVOS MIEMBROS (30 DÍAS)', value: '15', sub: '68% del total', icon: 'fa-user-plus' },
-                { name: 'MIEMBROS ACTIVOS', value: '4', sub: '18% de retención', icon: 'fa-wave-square' },
-                { name: 'ESCANEOS TOTALES', value: '24', sub: '~6.0 por miembro activo', icon: 'fa-qrcode' },
-                { name: 'PREMIOS CANJEADOS', value: '8', sub: '36% de conversión', icon: 'fa-gift' },
-                { name: 'MIEMBROS SIN VISITAS', value: '17', sub: '77% inactivos', icon: 'fa-user-slash' }
-              ].map((card) => (
-                <div key={card.name} className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow">
-                  <div className="h-12 w-12 rounded-2xl bg-gray-100/80 text-gray-500 flex items-center justify-center text-lg shrink-0">
-                    <i className={`fa-solid ${card.icon}`}></i>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase">{card.name}</span>
-                    <span className="block text-2xl font-black text-gray-900 leading-none">{card.value}</span>
-                    {card.sub && <span className="block text-xs font-bold text-primary mt-0.5">{card.sub}</span>}
-                  </div>
+            {/* 1. VISTA GENERAL (DASHBOARD METRICS VIEW) */}
+            {dashboardTab === 'Vista General' && (
+              <div className="space-y-8">
+                <h1 className="font-heading text-3xl font-black text-gray-900 leading-none">Vista General</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[
+                    { name: 'MIEMBROS TOTALES', value: '22', icon: 'fa-users' },
+                    { name: 'NUEVOS MIEMBROS (30 DÍAS)', value: '15', sub: '68% del total', icon: 'fa-user-plus' },
+                    { name: 'MIEMBROS ACTIVOS', value: '4', sub: '18% de retención', icon: 'fa-wave-square' },
+                    { name: 'ESCANEOS TOTALES', value: '24', sub: '~6.0 por miembro activo', icon: 'fa-qrcode' },
+                    { name: 'PREMIOS CANJEADOS', value: '8', sub: '36% de conversión', icon: 'fa-gift' },
+                    { name: 'MIEMBROS SIN VISITAS', value: '17', sub: '77% inactivos', icon: 'fa-user-slash' }
+                  ].map((card) => (
+                    <div key={card.name} className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow">
+                      <div className="h-12 w-12 rounded-2xl bg-gray-100/80 text-gray-500 flex items-center justify-center text-lg shrink-0">
+                        <i className={`fa-solid ${card.icon}`}></i>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase">{card.name}</span>
+                        <span className="block text-2xl font-black text-gray-900 leading-none">{card.value}</span>
+                        {card.sub && <span className="block text-xs font-bold text-primary mt-0.5">{card.sub}</span>}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            
-            {/* Centered Income card */}
-            <div className="flex justify-center pt-2">
-              <div className="w-full md:max-w-sm bg-white rounded-3xl border border-gray-150 p-6 shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow text-left">
-                <div className="h-12 w-12 rounded-2xl bg-gray-100/80 text-gray-500 flex items-center justify-center text-lg shrink-0">
-                  <i className="fa-solid fa-sack-dollar"></i>
-                </div>
-                <div className="space-y-1 text-left">
-                  <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase">INGRESOS TOTALES</span>
-                  <span className="block text-2xl font-black text-gray-900 leading-none">3565$</span>
+                <div className="flex justify-center pt-2">
+                  <div className="w-full md:max-w-sm bg-white rounded-3xl border border-gray-150 p-6 shadow-sm flex items-center gap-5 hover:shadow-md transition-shadow text-left">
+                    <div className="h-12 w-12 rounded-2xl bg-gray-100/80 text-gray-500 flex items-center justify-center text-lg shrink-0">
+                      <i className="fa-solid fa-sack-dollar"></i>
+                    </div>
+                    <div className="space-y-1 text-left">
+                      <span className="block text-[0.65rem] font-bold text-gray-400 tracking-wider uppercase">INGRESOS TOTALES</span>
+                      <span className="block text-2xl font-black text-gray-900 leading-none">3565$</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+
+            {/* 2. MEMBERS DIRECTORY PAGE VIEW */}
+            {dashboardTab === 'Miembros' && (
+              <div className="space-y-6">
+                <div className="text-left space-y-1">
+                  <h1 className="font-heading text-3xl font-black text-gray-900 leading-none flex items-center gap-3">
+                    <i className="fa-solid fa-users text-gray-700 text-2xl"></i> Members Directory
+                  </h1>
+                  <p className="text-gray-400 text-sm">Manage and interact with registered customers</p>
+                </div>
+
+                {/* Filters Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 items-center">
+                  <input 
+                    type="text" 
+                    placeholder="Name..." 
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
+                    value={filterName}
+                    onChange={(e) => setFilterName(e.target.value)}
+                  />
+                  <input 
+                    type="text" 
+                    placeholder="Email..." 
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
+                    value={filterEmail}
+                    onChange={(e) => setFilterEmail(e.target.value)}
+                  />
+                  <input 
+                    type="text" 
+                    placeholder="Phone..." 
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
+                    value={filterPhone}
+                    onChange={(e) => setFilterPhone(e.target.value)}
+                  />
+                  <select 
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm cursor-pointer font-bold text-gray-600"
+                    value={filterSort}
+                    onChange={(e) => setFilterSort(e.target.value)}
+                  >
+                    <option value="Newest">Sort: Newest</option>
+                    <option value="Visitas">Sort: Most Visits</option>
+                  </select>
+                  
+                  <div className="flex gap-2 w-full">
+                    <button className="flex-1 py-3 bg-charcoal hover:bg-charcoal/90 text-white font-bold text-xs rounded-2xl shadow flex items-center justify-center gap-1.5 transition-all">
+                      <i className="fa-solid fa-magnifying-glass"></i> Search
+                    </button>
+                    <button 
+                      onClick={handleResetFilters}
+                      className="px-3 py-3 border border-gray-200 bg-white hover:bg-gray-50 rounded-2xl shadow-sm text-gray-500 transition-colors"
+                      title="Reset Filters"
+                    >
+                      <i className="fa-solid fa-rotate-right text-sm"></i>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Results block */}
+                <div className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm space-y-6">
+                  <div className="flex justify-between items-center border-b border-gray-100 pb-4">
+                    <div className="flex items-center gap-2 text-left border-l-4 border-primary pl-3">
+                      <h3 className="font-heading font-black text-lg text-gray-900">Results</h3>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={handleSendBulkOffer}
+                        className="px-4 py-2 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-xl shadow flex items-center gap-1.5"
+                      >
+                        <i className="fa-solid fa-paper-plane"></i> Offer to Inactive (+1 mo)
+                      </button>
+                      <span className="px-3.5 py-1.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 bg-gray-50">
+                        {filteredMembers.length} members
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Members directory table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs text-left">
+                      <thead>
+                        <tr className="text-gray-400 font-extrabold uppercase tracking-wider border-b border-gray-100 pb-3">
+                          <th className="pb-3 pl-4">Name</th>
+                          <th className="pb-3">Contact</th>
+                          <th className="pb-3 text-center">Visits</th>
+                          <th className="pb-3 text-center">Total Visits</th>
+                          <th className="pb-3 text-center">Redeemed Rewards</th>
+                          <th className="pb-3 text-center">Inactividad</th>
+                          <th className="pb-3 text-right pr-4">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        {filteredMembers.map((member) => (
+                          <tr key={member.email} className="hover:bg-gray-50/50 transition-colors">
+                            <td className="py-4 pl-4 flex items-center gap-3">
+                              <div className={`h-8 w-8 rounded-full ${member.avatarColor} text-white font-bold flex items-center justify-center`}>
+                                {member.name.charAt(0)}
+                              </div>
+                              <span className="font-bold text-gray-900">{member.name}</span>
+                            </td>
+                            <td className="py-4 text-gray-500 font-medium">
+                              <div className="flex items-center gap-1.5">
+                                <i className="fa-regular fa-envelope text-gray-400"></i> {member.email}
+                              </div>
+                              <div className="flex items-center gap-1.5 mt-0.5">
+                                <i className="fa-solid fa-phone text-gray-400"></i> {member.phone}
+                              </div>
+                            </td>
+                            <td className="py-4 text-center">
+                              <span className="inline-block px-2.5 py-1 bg-gray-100 rounded-lg font-bold text-gray-700">{member.visits}</span>
+                            </td>
+                            <td className="py-4 text-center">
+                              <span className="inline-block px-2.5 py-1 bg-emerald-50 rounded-lg font-bold text-emerald-600">{member.totalVisits}</span>
+                            </td>
+                            <td className="py-4 text-center">
+                              <span className="inline-block px-2.5 py-1 bg-emerald-50 rounded-lg font-bold text-emerald-600">{member.redeemedRewards}</span>
+                            </td>
+                            <td className="py-4 text-center text-gray-500 font-semibold">
+                              <div className="flex items-center justify-center gap-1">
+                                <i className="fa-regular fa-clock text-gray-400"></i> {member.inactivity}
+                              </div>
+                            </td>
+                            <td className="py-4 text-right pr-4">
+                              <button 
+                                onClick={() => handleSendOffer(member.email)}
+                                className="px-3.5 py-2 bg-charcoal hover:bg-charcoal/95 text-white font-bold rounded-xl flex items-center gap-1.5 ml-auto text-[0.7rem]"
+                              >
+                                <i className="fa-solid fa-paper-plane"></i> Oferta
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 3. WALLET DESIGNER TAB VIEW */}
+            {dashboardTab === 'Tarjeta Fidelización' && (
+              <div className="space-y-6">
+                <div className="text-left space-y-1">
+                  <h1 className="font-heading text-3xl font-black text-gray-900 leading-none flex items-center gap-3">
+                    <i className="fa-solid fa-wallet text-gray-700 text-2xl"></i> Tarjeta de Fidelización
+                  </h1>
+                  <p className="text-gray-400 text-sm">Diseña tu tarjeta de sellos y recompensas para 2GetherRewards Club</p>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                  
+                  {/* Left Column (Controls) */}
+                  <div className="lg:col-span-8 bg-white rounded-3xl border border-gray-150 p-6 shadow-sm space-y-6">
+                    {/* Visual Tabs */}
+                    <div className="flex gap-6 border-b border-gray-150 pb-3 text-xs font-bold text-gray-400">
+                      <span className="border-b-2 border-primary text-primary pb-3 px-1 cursor-pointer flex items-center gap-1.5">
+                        <i className="fa-solid fa-palette"></i> Diseño Visual
+                      </span>
+                      <span className="pb-3 px-1 cursor-pointer flex items-center gap-1.5 hover:text-gray-600">
+                        <i className="fa-solid fa-circle-info"></i> Información General
+                      </span>
+                      <span className="pb-3 px-1 cursor-pointer flex items-center gap-1.5 hover:text-gray-600">
+                        <i className="fa-solid fa-link"></i> Enlaces (Reverso)
+                      </span>
+                      <span className="pb-3 px-1 cursor-pointer flex items-center gap-1.5 hover:text-gray-600">
+                        <i className="fa-solid fa-location-dot"></i> Geolocalización
+                      </span>
+                    </div>
+
+                    {/* Card type choice */}
+                    <div className="space-y-3 text-left">
+                      <h4 className="font-heading font-black text-sm text-gray-800 flex items-center gap-2">
+                        <i className="fa-regular fa-id-card text-gray-400"></i> Tipo de Tarjeta de Fidelización
+                      </h4>
+                      <p className="text-[0.7rem] text-gray-400">Elige el tipo de fidelización para tus clientes:</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div 
+                          className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${walletType === 'sellos' ? 'border-primary bg-emerald-50/20' : 'border-gray-200 bg-white hover:border-gray-300'}`}
+                          onClick={() => setWalletType('sellos')}
+                        >
+                          <span className="block text-xs font-bold text-gray-800">Tarjeta de Sellos</span>
+                          <span className="block text-[0.65rem] text-gray-400 mt-1 leading-relaxed">
+                            Los clientes acumulan sellos con cada visita o compra. El banner cambia progresivamente según el total de sellos.
+                          </span>
+                        </div>
+                        <div 
+                          className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${walletType === 'membresia' ? 'border-primary bg-emerald-50/20' : 'border-gray-200 bg-white hover:border-gray-300'}`}
+                          onClick={() => setWalletType('membresia')}
+                        >
+                          <span className="block text-xs font-bold text-gray-800">Tarjeta de Membresía / Socio</span>
+                          <span className="block text-[0.65rem] text-gray-400 mt-1 leading-relaxed">
+                            Tarjeta estática que identifica al cliente (socio VIP) y le otorga beneficios fijos. No acumula puntos ni sellos.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Stamps count */}
+                    <div className="space-y-3 text-left">
+                      <h4 className="font-heading font-black text-sm text-gray-800 flex items-center gap-2">
+                        <i className="fa-solid fa-percent text-gray-400"></i> Número de sellos en la tarjeta
+                      </h4>
+                      <p className="text-[0.7rem] text-gray-400">Elige cuántos sellos debe tener la tarjeta para completar la recompensa.</p>
+                      <select 
+                        className="w-48 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white font-bold text-gray-700 cursor-pointer shadow-sm"
+                        value={walletStampsCount}
+                        onChange={(e) => setWalletStampsCount(Number(e.target.value))}
+                      >
+                        <option value="4">4 sellos</option>
+                        <option value="6">6 sellos</option>
+                        <option value="8">8 sellos</option>
+                        <option value="10">10 sellos</option>
+                      </select>
+                    </div>
+
+                    {/* Stamps sequence upload placeholder */}
+                    <div className="space-y-3 text-left">
+                      <h4 className="font-heading font-black text-sm text-gray-800 flex items-center gap-2">
+                        Secuencia de Sellos
+                      </h4>
+                      <p className="text-[0.7rem] text-gray-400">Sube las imágenes de cabecera correspondientes a cada estado de sellos</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-1">
+                        {Array.from({ length: 4 }).map((_, idx) => (
+                          <div key={idx} className="border border-dashed border-gray-200 bg-gray-50 rounded-2xl p-4 text-center space-y-2 flex flex-col justify-center items-center h-24">
+                            <i className="fa-regular fa-image text-gray-300 text-lg"></i>
+                            <span className="block text-[0.6rem] text-gray-400 font-bold">{idx === 0 ? 'Vacía' : `${idx} Sello(s)`}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column (Guide and Live Preview) */}
+                  <div className="lg:col-span-4 space-y-6">
+                    {/* Design guide */}
+                    <div className="bg-charcoal text-white rounded-3xl p-6 shadow-xl space-y-4 text-left">
+                      <h4 className="font-heading font-black text-sm flex items-center gap-2 text-lime">
+                        <i className="fa-regular fa-circle-check"></i> Guía de Diseño
+                      </h4>
+                      <ul className="space-y-3 text-[0.7rem] leading-relaxed text-gray-300">
+                        <li className="flex items-start gap-2">
+                          <span className="h-4.5 w-4.5 rounded-full bg-white/10 flex items-center justify-center font-bold text-lime text-[0.6rem] shrink-0 mt-0.5">1</span>
+                          <span>Usa imágenes de 1032 x 336 píxeles para un ajuste perfecto.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="h-4.5 w-4.5 rounded-full bg-white/10 flex items-center justify-center font-bold text-lime text-[0.6rem] shrink-0 mt-0.5">2</span>
+                          <span>Mantén los textos y logos importantes lejos de los bordes.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="h-4.5 w-4.5 rounded-full bg-white/10 flex items-center justify-center font-bold text-lime text-[0.6rem] shrink-0 mt-0.5">3</span>
+                          <span>Optimiza el archivo para que no supere los 2MB.</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Previsualization layout */}
+                    <div className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm space-y-4">
+                      <div className="flex justify-between items-center">
+                        <h4 className="font-heading font-black text-sm text-gray-800 flex items-center gap-2">
+                          <i className="fa-regular fa-credit-card text-gray-400"></i> Previsualización
+                        </h4>
+                        <div className="flex rounded-lg bg-gray-100 p-0.5 text-[0.65rem] font-bold text-gray-500">
+                          <span className="px-2.5 py-1 bg-white rounded-md text-charcoal shadow-sm">Apple</span>
+                          <span className="px-2.5 py-1 cursor-pointer">Google</span>
+                        </div>
+                      </div>
+
+                      {/* Apple Wallet Mockup Preview */}
+                      <div className="border border-gray-200/60 rounded-3xl p-4 bg-gray-50 flex justify-center">
+                        <div className="w-[280px] bg-[#69BFA1] text-white rounded-2xl shadow-lg border border-emerald-400/20 overflow-hidden flex flex-col justify-between p-4 h-[440px] text-left">
+                          {/* Card header */}
+                          <div className="flex justify-between items-start">
+                            <div className="flex items-center gap-1.5">
+                              <img src="/logo-handshake-white.png" alt="handshake" className="h-5 w-auto" />
+                              <div className="leading-none">
+                                <span className="block text-[0.55rem] font-black tracking-wider uppercase">2GETHER</span>
+                                <span className="block text-[0.45rem] font-light tracking-widest mt-0.5 uppercase">REWARDS</span>
+                              </div>
+                            </div>
+                            <span className="h-5 w-5 bg-white/10 rounded-full border border-white/10 flex items-center justify-center text-[0.5rem]"><i className="fa-solid fa-ellipsis"></i></span>
+                          </div>
+
+                          {/* Banner Slot */}
+                          <div className="my-auto py-4 space-y-4">
+                            <div className="h-16 w-full rounded-lg bg-emerald-500/30 border border-white/15 flex flex-col justify-center items-center relative overflow-hidden p-2">
+                              <span className="text-[0.6rem] font-black tracking-widest">2GETHER REWARDS</span>
+                              {/* Render stamp slots dynamic grids based on count */}
+                              <div className="flex gap-1.5 justify-center mt-2.5">
+                                {Array.from({ length: walletStampsCount }).map((_, idx) => (
+                                  <span key={idx} className="h-4.5 w-4.5 rounded-full bg-charcoal/40 border border-white/20 flex items-center justify-center text-[0.45rem]"><i className="fa-solid fa-stamp text-white/10"></i></span>
+                                ))}
+                              </div>
+                              <span className="absolute bottom-1 right-2 text-[0.45rem] font-bold bg-charcoal/50 px-1.5 py-0.5 rounded-md">0 / {walletStampsCount} sellos</span>
+                            </div>
+                          </div>
+
+                          {/* Footer details */}
+                          <div className="space-y-4">
+                            <div className="flex justify-between text-[0.55rem]">
+                              <div>
+                                <span className="block text-white/50 text-[0.45rem] uppercase font-bold tracking-wider">TÍTULAR</span>
+                                <span className="font-bold">JON DOE</span>
+                              </div>
+                              <div className="text-right">
+                                <span className="block text-white/50 text-[0.45rem] uppercase font-bold tracking-wider">PREMIO</span>
+                                <span className="font-bold">0</span>
+                              </div>
+                            </div>
+
+                            {/* Barcode / QR */}
+                            <div className="bg-white p-2.5 rounded-xl flex flex-col justify-center items-center w-[120px] mx-auto shadow-md">
+                              <i className="fa-solid fa-qrcode text-charcoal text-4xl"></i>
+                              <span className="block text-[0.45rem] text-gray-400 font-bold mt-1 tracking-widest">LOYALTY-001</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 4. SMART SCANNER TAB VIEW */}
+            {dashboardTab === 'Escáner' && (
+              <div className="space-y-6">
+                <div className="text-left space-y-1">
+                  <h1 className="font-heading text-3xl font-black text-gray-900 leading-none flex items-center gap-3">
+                    <i className="fa-solid fa-qrcode text-gray-700 text-2xl"></i> Escáner Inteligente
+                  </h1>
+                  <p className="text-gray-400 text-sm">Registra visitas o canjea cupones escaneando el código de tu cliente</p>
+                </div>
+
+                <div className="max-w-2xl mx-auto bg-white rounded-3xl border border-gray-150 p-8 shadow-sm flex flex-col items-center space-y-6 text-center">
+                  
+                  {/* Camera view screen box */}
+                  <div className="w-full max-w-md aspect-video bg-gray-50 border border-gray-200/80 rounded-3xl flex flex-col justify-center items-center relative overflow-hidden p-6">
+                    {scannerActive ? (
+                      <div className="w-full h-full flex flex-col justify-center items-center space-y-4">
+                        {/* Animated Scanner frame */}
+                        <div className="absolute inset-8 border-2 border-dashed border-primary rounded-2xl animate-pulse"></div>
+                        <div className="w-full h-0.5 bg-primary/80 absolute top-1/2 left-0 shadow-lg animate-bounce"></div>
+                        
+                        <i className="fa-solid fa-circle-notch text-primary text-3xl animate-spin z-10"></i>
+                        <span className="text-xs font-bold text-charcoal z-10">Buscando código QR de pase Wallet...</span>
+                        
+                        <div className="flex gap-2 pt-2 z-10">
+                          <button 
+                            onClick={() => handleSimulateScan('Jon Doe')}
+                            className="px-3 py-1.5 bg-primary hover:bg-primary-hover text-white text-[0.65rem] font-bold rounded-lg shadow-sm"
+                          >
+                            Simular Jon Doe
+                          </button>
+                          <button 
+                            onClick={() => handleSimulateScan('Daniel')}
+                            className="px-3 py-1.5 bg-accent hover:bg-accent-hover text-white text-[0.65rem] font-bold rounded-lg shadow-sm"
+                          >
+                            Simular Daniel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="h-16 w-16 bg-gray-150 text-gray-500 rounded-full flex items-center justify-center text-2xl shadow-inner mb-4">
+                          <i className="fa-solid fa-camera"></i>
+                        </div>
+                        <h4 className="font-heading font-black text-base text-gray-800">Escáner Inactivo</h4>
+                        <p className="text-xs text-gray-400 leading-relaxed max-w-xs mt-1">
+                          Activa la cámara de tu dispositivo para leer el código QR y procesar la operación automáticamente.
+                        </p>
+                        
+                        <button 
+                          onClick={() => setScannerActive(true)}
+                          className="mt-6 px-6 py-3 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-2xl shadow flex items-center justify-center gap-2 transition-all"
+                        >
+                          <i className="fa-solid fa-expand"></i> Iniciar Escáner
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Optional purchase amount input */}
+                  <div className="w-full max-w-md text-left space-y-2">
+                    <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">Monto de la Compra (Opcional)</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm">$</span>
+                      <input 
+                        type="number" 
+                        step="0.01" 
+                        placeholder="0.00"
+                        className="w-full pl-8 pr-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-sm font-bold text-charcoal bg-white shadow-inner"
+                        value={scanAmount}
+                        onChange={(e) => setScanAmount(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Manual entry block */}
+                  <hr className="w-full max-w-md border-gray-100" />
+                  <form onSubmit={handleManualScanSubmit} className="w-full max-w-md text-left space-y-2">
+                    <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">¿Tienes un código manual?</label>
+                    <div className="flex gap-2">
+                      <input 
+                        type="text" 
+                        placeholder="Introduce el código de la tarjeta..." 
+                        className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
+                        value={manualCode}
+                        onChange={(e) => setManualCode(e.target.value)}
+                      />
+                      <button type="submit" className="px-5 py-3 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-2xl shadow">
+                        Verificar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            {/* 5. GIFT CARDS TAB VIEW */}
+            {dashboardTab === 'Gift Cards' && (
+              <div className="space-y-6">
+                <div className="text-left space-y-1">
+                  <h1 className="font-heading text-3xl font-black text-gray-900 leading-none flex items-center gap-3">
+                    <i className="fa-solid fa-gift text-gray-700 text-2xl"></i> Tarjetas Regalo
+                  </h1>
+                  <p className="text-gray-400 text-sm">Emite nuevas tarjetas de saldo precargado.</p>
+                </div>
+
+                <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                  
+                  {/* Left: Gift Emitter controls */}
+                  <div className="bg-white rounded-3xl border border-gray-150 p-8 shadow-sm flex flex-col items-center space-y-6">
+                    {/* Emitter Preview */}
+                    <div className="w-full max-w-[280px] bg-gradient-to-br from-primary via-accent to-charcoal text-white rounded-2xl p-5 shadow-lg border border-white/10 text-left flex flex-col justify-between h-[180px] relative overflow-hidden">
+                      <div className="absolute top-[-10%] right-[-10%] w-[100px] h-[100px] bg-white/5 rounded-full blur-md"></div>
+                      <div className="flex justify-between items-start relative z-10">
+                        <div>
+                          <span className="block text-[0.45rem] font-bold text-white/50 uppercase">GIFT CARD</span>
+                          <span className="block text-sm font-black mt-0.5">2GetherRewards</span>
+                        </div>
+                        <i className="fa-solid fa-gift text-white/20 text-xl"></i>
+                      </div>
+                      
+                      <div className="relative z-10">
+                        <span className="block text-[0.45rem] font-bold text-white/50 uppercase">SALDO DISPONIBLE</span>
+                        <div className="flex items-baseline gap-1 mt-0.5">
+                          <span className="text-3xl font-black">{giftAmount}</span>
+                          <span className="text-sm font-bold">$</span>
+                        </div>
+                      </div>
+                      <div className="flex justify-end relative z-10">
+                        <i className="fa-solid fa-credit-card text-white/40 text-lg"></i>
+                      </div>
+                    </div>
+
+                    {/* Price Slider adjuster */}
+                    <div className="w-full space-y-3">
+                      <label className="block text-center text-xs font-bold text-gray-500">Selecciona la Cantidad (Máx. 500$)</label>
+                      
+                      <div className="flex items-center justify-between w-full max-w-[220px] mx-auto gap-4">
+                        <button 
+                          onClick={() => setGiftAmount(prev => Math.max(5, prev - 5))}
+                          className="h-8 w-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center font-bold text-gray-600 transition-colors shadow-sm text-sm"
+                        >
+                          <i className="fa-solid fa-minus"></i>
+                        </button>
+                        
+                        <div className="flex-1 text-center border-b-2 border-charcoal pb-1 flex justify-center items-baseline gap-0.5">
+                          <input 
+                            type="number" 
+                            min="5" 
+                            max="500" 
+                            step="5"
+                            className="w-16 text-center text-xl font-black text-gray-900 bg-transparent focus:outline-none"
+                            value={giftAmount}
+                            onChange={(e) => setGiftAmount(Math.max(5, Math.min(500, Number(e.target.value))))}
+                          />
+                          <span className="text-base font-bold text-gray-400">$</span>
+                        </div>
+
+                        <button 
+                          onClick={() => setGiftAmount(prev => Math.min(500, prev + 5))}
+                          className="h-8 w-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center font-bold text-gray-600 transition-colors shadow-sm text-sm"
+                        >
+                          <i className="fa-solid fa-plus"></i>
+                        </button>
+                      </div>
+
+                      {/* HTML Slider range */}
+                      <input 
+                        type="range" 
+                        min="5" 
+                        max="500" 
+                        step="5" 
+                        className="w-full accent-primary mt-4 cursor-pointer"
+                        value={giftAmount}
+                        onChange={(e) => setGiftAmount(Number(e.target.value))}
+                      />
+                    </div>
+
+                    <button 
+                      onClick={handleEmitGiftCard}
+                      className="w-full py-4 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-2xl shadow flex items-center justify-center gap-2 uppercase tracking-wider mt-2 transition-all active:scale-95"
+                    >
+                      <i className="fa-solid fa-gift"></i> Emitir Tarjeta por {giftAmount}$
+                    </button>
+                  </div>
+
+                  {/* Right: Issued gift cards history */}
+                  <div className="bg-white rounded-3xl border border-gray-150 p-6 shadow-sm space-y-4 text-left">
+                    <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                      <h4 className="font-heading font-black text-sm text-gray-800 flex items-center gap-2">
+                        <i className="fa-solid fa-receipt text-gray-400"></i> Historial de Emisión
+                      </h4>
+                      <button className="px-3.5 py-1.5 bg-gray-50 hover:bg-gray-100 rounded-xl text-[0.65rem] font-bold text-gray-500 border border-gray-200 flex items-center gap-1">
+                        <i className="fa-solid fa-qrcode"></i> Escanear Tarjeta
+                      </button>
+                    </div>
+
+                    <div className="divide-y divide-gray-100 max-h-[300px] overflow-y-auto pr-1">
+                      {giftVouchers.map((voucher) => (
+                        <div key={voucher.code} className="py-3 flex justify-between items-center text-xs">
+                          <div>
+                            <span className="block font-bold text-gray-900 font-mono">{voucher.code}</span>
+                            <span className="block text-[0.6rem] text-gray-400 mt-0.5">Emitida el {voucher.date}</span>
+                          </div>
+                          <div className="text-right">
+                            <span className="block font-black text-gray-900">${voucher.amount}</span>
+                            <span className="inline-block mt-0.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-bold text-[0.55rem] uppercase">{voucher.status}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 6. SYSTEM CONFIGURATIONS TAB VIEW */}
+            {dashboardTab === 'Configuración del Sistema' && (
+              <div className="space-y-6 max-w-md mx-auto bg-white rounded-3xl border border-gray-150 p-8 shadow-sm text-left">
+                <div className="space-y-1">
+                  <h1 className="font-heading text-2xl font-black text-gray-900 flex items-center gap-2 leading-none">
+                    <i className="fa-solid fa-gear text-gray-600"></i> Configuración
+                  </h1>
+                  <p className="text-gray-400 text-xs">Ajusta los parámetros generales de tu programa</p>
+                </div>
+                
+                <div className="space-y-4 pt-4 text-xs font-medium text-gray-700">
+                  <div className="space-y-1.5">
+                    <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">Nombre del Club / Comercio</label>
+                    <input type="text" defaultValue="2GetherRewards Club" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">Dirección Principal</label>
+                    <input type="text" defaultValue="Calle Juan Bravo 62, Madrid" className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">Moneda Base</label>
+                    <select className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs cursor-pointer">
+                      <option>Dólar Estadounidense ($)</option>
+                      <option>Euro (€)</option>
+                      <option>Peso Mexicano (MXN)</option>
+                    </select>
+                  </div>
+                  
+                  <button 
+                    onClick={() => alert('¡Configuraciones guardadas con éxito!')}
+                    className="w-full py-3 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-xl shadow-lg mt-4 transition-all"
+                  >
+                    Guardar Cambios
+                  </button>
+                </div>
+              </div>
+            )}
           </main>
         </div>
       </div>
