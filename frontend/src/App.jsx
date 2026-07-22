@@ -37,7 +37,7 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('inicio');
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+
   // Page view state: 'landing' or 'dashboard-trial'
   const [currentPage, setCurrentPage] = useState('landing');
   const [activeTab, setActiveTab] = useState('registro'); // 'acceso' or 'registro'
@@ -138,7 +138,7 @@ function App() {
       alert('Credenciales incorrectas. Por favor, utiliza u3058171184@gmail.com y 123456.');
     }
   };
-  
+
   // Cart state persisted in localStorage
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem('2gr_cart');
@@ -384,8 +384,8 @@ function App() {
         <aside className="w-64 bg-primary shrink-0 flex flex-col justify-between p-6 text-white min-h-screen">
           <div className="space-y-8 text-left">
             {/* Logo Link to Landing */}
-            <a 
-              href="#inicio" 
+            <a
+              href="#inicio"
               className="flex items-center gap-3 font-heading font-black text-xl tracking-tight text-white"
               onClick={() => setCurrentPage('landing')}
             >
@@ -395,7 +395,7 @@ function App() {
                 <span className="block text-[0.65rem] font-light tracking-widest mt-0.5">REWARDS</span>
               </div>
             </a>
-            
+
             {/* Nav links */}
             <nav className="flex flex-col gap-1">
               {/* Dashboard / Vista General */}
@@ -428,7 +428,7 @@ function App() {
                   </div>
                   <i className={`fa-solid fa-chevron-down text-[0.7rem] transition-transform duration-200 ${isWalletMenuOpen ? 'rotate-180' : ''}`}></i>
                 </button>
-                
+
                 {isWalletMenuOpen && (
                   <div className="pl-6 flex flex-col gap-1 mt-1">
                     {[
@@ -474,7 +474,7 @@ function App() {
               </button>
             </nav>
           </div>
-          
+
           <div className="text-xs text-white/40 text-left">
             &copy; 2026 2GetherRewards
           </div>
@@ -494,12 +494,12 @@ function App() {
                 <span className="text-[0.75rem] text-gray-400 font-medium">lunes, 13 de julio de 2026</span>
               </div>
             </div>
-            
+
             {/* Controls */}
             <div className="flex items-center gap-4">
               {/* Branch dropdown */}
               <div className="relative">
-                <select 
+                <select
                   className="px-4 py-2 rounded-xl border border-gray-200 text-xs font-bold text-charcoal bg-white focus:outline-none focus:border-primary shadow-sm cursor-pointer"
                   value={selectedBranch}
                   onChange={(e) => setSelectedBranch(e.target.value)}
@@ -510,14 +510,14 @@ function App() {
                   <option value="Cancha La Castellana">Cancha La Castellana</option>
                 </select>
               </div>
-              
+
               {/* Language */}
               <span className="h-8 w-8 rounded-xl border border-gray-200 bg-white flex items-center justify-center text-xs font-bold text-charcoal shadow-sm">
                 ES
               </span>
-              
+
               {/* Log out */}
-              <button 
+              <button
                 className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-xl text-xs font-bold text-gray-500 hover:text-red-500 hover:border-red-200 transition-colors bg-white shadow-sm"
                 onClick={() => setCurrentPage('landing')}
               >
@@ -529,12 +529,12 @@ function App() {
 
           {/* DASHBOARD VIEWPORT CONDITIONAL PAGES */}
           <main className="flex-1 p-8 text-left space-y-8 bg-graylight">
-            
+
             {/* 1. VISTA GENERAL (DASHBOARD METRICS VIEW) */}
             {dashboardTab === 'Vista General' && (
               <div className="space-y-8">
                 <h1 className="font-heading text-3xl font-black text-gray-900 leading-none text-left">Dashboard</h1>
-                
+
                 {/* Row 1 (4 columns) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
@@ -585,7 +585,7 @@ function App() {
                         <p className="text-gray-400 text-xs font-semibold">Real data from the last 12 days</p>
                       </div>
                     </div>
-                    
+
                     {/* Right filters */}
                     <div className="flex flex-col items-end gap-2.5 w-full sm:w-auto">
                       {/* Tab control 1 */}
@@ -613,25 +613,25 @@ function App() {
                           <stop offset="100%" stopColor="#69BFA1" stopOpacity="0.0" />
                         </linearGradient>
                       </defs>
-                      
+
                       {/* Grid Y lines */}
                       <line x1="50" y1="30" x2="950" y2="30" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
                       <line x1="50" y1="80" x2="950" y2="80" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
                       <line x1="50" y1="130" x2="950" y2="130" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
                       <line x1="50" y1="180" x2="950" y2="180" stroke="#f1f3f5" strokeWidth="1" strokeDasharray="4 4" />
-                      
+
                       {/* Fill area */}
-                      <path 
-                        d="M 50 180 C 130 170, 210 160, 290 140 C 370 120, 450 110, 530 80 C 610 50, 690 60, 770 40 C 850 20, 900 30, 950 30 L 950 180 Z" 
-                        fill="url(#chart-grad)" 
+                      <path
+                        d="M 50 180 C 130 170, 210 160, 290 140 C 370 120, 450 110, 530 80 C 610 50, 690 60, 770 40 C 850 20, 900 30, 950 30 L 950 180 Z"
+                        fill="url(#chart-grad)"
                       />
 
                       {/* Bezier Line stroke */}
-                      <path 
-                        d="M 50 180 C 130 170, 210 160, 290 140 C 370 120, 450 110, 530 80 C 610 50, 690 60, 770 40 C 850 20, 900 30, 950 30" 
-                        fill="none" 
-                        stroke="#69BFA1" 
-                        strokeWidth="4" 
+                      <path
+                        d="M 50 180 C 130 170, 210 160, 290 140 C 370 120, 450 110, 530 80 C 610 50, 690 60, 770 40 C 850 20, 900 30, 950 30"
+                        fill="none"
+                        stroke="#69BFA1"
+                        strokeWidth="4"
                         strokeLinecap="round"
                       />
 
@@ -671,28 +671,28 @@ function App() {
 
                 {/* Filters Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 items-center">
-                  <input 
-                    type="text" 
-                    placeholder="Name..." 
+                  <input
+                    type="text"
+                    placeholder="Name..."
                     className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
                     value={filterName}
                     onChange={(e) => setFilterName(e.target.value)}
                   />
-                  <input 
-                    type="text" 
-                    placeholder="Email..." 
+                  <input
+                    type="text"
+                    placeholder="Email..."
                     className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
                     value={filterEmail}
                     onChange={(e) => setFilterEmail(e.target.value)}
                   />
-                  <input 
-                    type="text" 
-                    placeholder="Phone..." 
+                  <input
+                    type="text"
+                    placeholder="Phone..."
                     className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
                     value={filterPhone}
                     onChange={(e) => setFilterPhone(e.target.value)}
                   />
-                  <select 
+                  <select
                     className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm cursor-pointer font-bold text-gray-600"
                     value={filterSort}
                     onChange={(e) => setFilterSort(e.target.value)}
@@ -700,12 +700,12 @@ function App() {
                     <option value="Newest">Sort: Newest</option>
                     <option value="Visitas">Sort: Most Visits</option>
                   </select>
-                  
+
                   <div className="flex gap-2 w-full">
                     <button className="flex-1 py-3 bg-charcoal hover:bg-charcoal/90 text-white font-bold text-xs rounded-2xl shadow flex items-center justify-center gap-1.5 transition-all">
                       <i className="fa-solid fa-magnifying-glass"></i> Search
                     </button>
-                    <button 
+                    <button
                       onClick={handleResetFilters}
                       className="px-3 py-3 border border-gray-200 bg-white hover:bg-gray-50 rounded-2xl shadow-sm text-gray-500 transition-colors"
                       title="Reset Filters"
@@ -722,7 +722,7 @@ function App() {
                       <h3 className="font-heading font-black text-lg text-gray-900">Results</h3>
                     </div>
                     <div className="flex items-center gap-3">
-                      <button 
+                      <button
                         onClick={handleSendBulkOffer}
                         className="px-4 py-2 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-xl shadow flex items-center gap-1.5"
                       >
@@ -780,7 +780,7 @@ function App() {
                               </div>
                             </td>
                             <td className="py-4 text-right pr-4">
-                              <button 
+                              <button
                                 onClick={() => handleSendOffer(member.email)}
                                 className="px-3.5 py-2 bg-charcoal hover:bg-charcoal/95 text-white font-bold rounded-xl flex items-center gap-1.5 ml-auto text-[0.7rem]"
                               >
@@ -807,7 +807,7 @@ function App() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                  
+
                   {/* Left Column (Controls) */}
                   <div className="lg:col-span-8 bg-white rounded-3xl border border-gray-150 p-6 shadow-sm space-y-6">
                     {/* Visual Tabs */}
@@ -833,7 +833,7 @@ function App() {
                       </h4>
                       <p className="text-[0.7rem] text-gray-400">Elige el tipo de fidelización para tus clientes:</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div 
+                        <div
                           className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${walletType === 'sellos' ? 'border-primary bg-emerald-50/20' : 'border-gray-200 bg-white hover:border-gray-300'}`}
                           onClick={() => setWalletType('sellos')}
                         >
@@ -842,7 +842,7 @@ function App() {
                             Los clientes acumulan sellos con cada visita o compra. El banner cambia progresivamente según el total de sellos.
                           </span>
                         </div>
-                        <div 
+                        <div
                           className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${walletType === 'membresia' ? 'border-primary bg-emerald-50/20' : 'border-gray-200 bg-white hover:border-gray-300'}`}
                           onClick={() => setWalletType('membresia')}
                         >
@@ -860,7 +860,7 @@ function App() {
                         <i className="fa-solid fa-percent text-gray-400"></i> Número de sellos en la tarjeta
                       </h4>
                       <p className="text-[0.7rem] text-gray-400">Elige cuántos sellos debe tener la tarjeta para completar la recompensa.</p>
-                      <select 
+                      <select
                         className="w-48 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white font-bold text-gray-700 cursor-pointer shadow-sm"
                         value={walletStampsCount}
                         onChange={(e) => setWalletStampsCount(Number(e.target.value))}
@@ -991,7 +991,7 @@ function App() {
                 </div>
 
                 <div className="max-w-2xl mx-auto bg-white rounded-3xl border border-gray-150 p-8 shadow-sm flex flex-col items-center space-y-6 text-center">
-                  
+
                   {/* Camera view screen box */}
                   <div className="w-full max-w-md aspect-video bg-gray-50 border border-gray-200/80 rounded-3xl flex flex-col justify-center items-center relative overflow-hidden p-6">
                     {scannerActive ? (
@@ -999,18 +999,18 @@ function App() {
                         {/* Animated Scanner frame */}
                         <div className="absolute inset-8 border-2 border-dashed border-primary rounded-2xl animate-pulse"></div>
                         <div className="w-full h-0.5 bg-primary/80 absolute top-1/2 left-0 shadow-lg animate-bounce"></div>
-                        
+
                         <i className="fa-solid fa-circle-notch text-primary text-3xl animate-spin z-10"></i>
                         <span className="text-xs font-bold text-charcoal z-10">Buscando código QR de pase Wallet...</span>
-                        
+
                         <div className="flex gap-2 pt-2 z-10">
-                          <button 
+                          <button
                             onClick={() => handleSimulateScan('Jon Doe')}
                             className="px-3 py-1.5 bg-primary hover:bg-primary-hover text-white text-[0.65rem] font-bold rounded-lg shadow-sm"
                           >
                             Simular Jon Doe
                           </button>
-                          <button 
+                          <button
                             onClick={() => handleSimulateScan('Daniel')}
                             className="px-3 py-1.5 bg-accent hover:bg-accent-hover text-white text-[0.65rem] font-bold rounded-lg shadow-sm"
                           >
@@ -1027,8 +1027,8 @@ function App() {
                         <p className="text-xs text-gray-400 leading-relaxed max-w-xs mt-1">
                           Activa la cámara de tu dispositivo para leer el código QR y procesar la operación automáticamente.
                         </p>
-                        
-                        <button 
+
+                        <button
                           onClick={() => setScannerActive(true)}
                           className="mt-6 px-6 py-3 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-2xl shadow flex items-center justify-center gap-2 transition-all"
                         >
@@ -1043,9 +1043,9 @@ function App() {
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">Monto de la Compra (Opcional)</label>
                     <div className="relative">
                       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm">$</span>
-                      <input 
-                        type="number" 
-                        step="0.01" 
+                      <input
+                        type="number"
+                        step="0.01"
                         placeholder="0.00"
                         className="w-full pl-8 pr-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-sm font-bold text-charcoal bg-white shadow-inner"
                         value={scanAmount}
@@ -1059,9 +1059,9 @@ function App() {
                   <form onSubmit={handleManualScanSubmit} className="w-full max-w-md text-left space-y-2">
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">¿Tienes un código manual?</label>
                     <div className="flex gap-2">
-                      <input 
-                        type="text" 
-                        placeholder="Introduce el código de la tarjeta..." 
+                      <input
+                        type="text"
+                        placeholder="Introduce el código de la tarjeta..."
                         className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:border-primary text-xs bg-white shadow-sm"
                         value={manualCode}
                         onChange={(e) => setManualCode(e.target.value)}
@@ -1086,7 +1086,7 @@ function App() {
                 </div>
 
                 <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                  
+
                   {/* Left: Gift Emitter controls */}
                   <div className="bg-white rounded-3xl border border-gray-150 p-8 shadow-sm flex flex-col items-center space-y-6">
                     {/* Emitter Preview */}
@@ -1099,7 +1099,7 @@ function App() {
                         </div>
                         <i className="fa-solid fa-gift text-white/20 text-xl"></i>
                       </div>
-                      
+
                       <div className="relative z-10">
                         <span className="block text-[0.45rem] font-bold text-white/50 uppercase">SALDO DISPONIBLE</span>
                         <div className="flex items-baseline gap-1 mt-0.5">
@@ -1115,20 +1115,20 @@ function App() {
                     {/* Price Slider adjuster */}
                     <div className="w-full space-y-3">
                       <label className="block text-center text-xs font-bold text-gray-500">Selecciona la Cantidad (Máx. 500$)</label>
-                      
+
                       <div className="flex items-center justify-between w-full max-w-[220px] mx-auto gap-4">
-                        <button 
+                        <button
                           onClick={() => setGiftAmount(prev => Math.max(5, prev - 5))}
                           className="h-8 w-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center font-bold text-gray-600 transition-colors shadow-sm text-sm"
                         >
                           <i className="fa-solid fa-minus"></i>
                         </button>
-                        
+
                         <div className="flex-1 text-center border-b-2 border-charcoal pb-1 flex justify-center items-baseline gap-0.5">
-                          <input 
-                            type="number" 
-                            min="5" 
-                            max="500" 
+                          <input
+                            type="number"
+                            min="5"
+                            max="500"
                             step="5"
                             className="w-16 text-center text-xl font-black text-gray-900 bg-transparent focus:outline-none"
                             value={giftAmount}
@@ -1137,7 +1137,7 @@ function App() {
                           <span className="text-base font-bold text-gray-400">$</span>
                         </div>
 
-                        <button 
+                        <button
                           onClick={() => setGiftAmount(prev => Math.min(500, prev + 5))}
                           className="h-8 w-8 rounded-full border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center font-bold text-gray-600 transition-colors shadow-sm text-sm"
                         >
@@ -1146,18 +1146,18 @@ function App() {
                       </div>
 
                       {/* HTML Slider range */}
-                      <input 
-                        type="range" 
-                        min="5" 
-                        max="500" 
-                        step="5" 
+                      <input
+                        type="range"
+                        min="5"
+                        max="500"
+                        step="5"
                         className="w-full accent-primary mt-4 cursor-pointer"
                         value={giftAmount}
                         onChange={(e) => setGiftAmount(Number(e.target.value))}
                       />
                     </div>
 
-                    <button 
+                    <button
                       onClick={handleEmitGiftCard}
                       className="w-full py-4 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-2xl shadow flex items-center justify-center gap-2 uppercase tracking-wider mt-2 transition-all active:scale-95"
                     >
@@ -1204,7 +1204,7 @@ function App() {
                   </h1>
                   <p className="text-gray-400 text-xs">Ajusta los parámetros generales de tu programa</p>
                 </div>
-                
+
                 <div className="space-y-4 pt-4 text-xs font-medium text-gray-700">
                   <div className="space-y-1.5">
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider">Nombre del Club / Comercio</label>
@@ -1222,8 +1222,8 @@ function App() {
                       <option>Peso Mexicano (MXN)</option>
                     </select>
                   </div>
-                  
-                  <button 
+
+                  <button
                     onClick={() => alert('¡Configuraciones guardadas con éxito!')}
                     className="w-full py-3 bg-charcoal hover:bg-charcoal/95 text-white font-bold text-xs rounded-xl shadow-lg mt-4 transition-all"
                   >
@@ -1251,7 +1251,7 @@ function App() {
             <img src="/logo-handshake-white.png" alt="2Gether Rewards Logo" className="h-8 w-auto" />
             2Gether<span className="text-primary">Rewards</span>
           </a>
-          
+
           <div className="space-y-6 max-w-lg my-auto relative z-10">
             <h2 className="font-heading text-4xl lg:text-5xl font-black leading-tight text-white">
               Tarjetas digitales<br />
@@ -1260,7 +1260,7 @@ function App() {
             <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
               Simplifica tu programa de fidelización. Crea y distribuye pases directamente en el móvil de tus clientes, sin descargas obligatorias.
             </p>
-            
+
             <div className="space-y-6 pt-6">
               {/* Feature 1 */}
               <div className="flex gap-4">
@@ -1296,20 +1296,20 @@ function App() {
               </div>
             </div>
           </div>
-          
+
           <p className="text-xs text-gray-500 relative z-10">&copy; 2026 2GetherRewards. Todos los derechos reservados.</p>
         </div>
 
         {/* Right Column (Form) */}
         <div className="w-full lg:w-1/2 lg:h-full lg:overflow-y-auto bg-graylight flex flex-col justify-start items-center p-6 sm:p-12 py-16 sm:py-24 relative min-h-screen lg:min-h-0">
           {/* Back button */}
-          <button 
+          <button
             className="absolute top-6 left-6 text-xs font-bold text-gray-400 hover:text-charcoal flex items-center gap-1.5"
             onClick={() => setCurrentPage('landing')}
           >
             <i className="fa-solid fa-arrow-left"></i> Volver a Inicio
           </button>
-          
+
           {/* Language selector */}
           <div className="absolute top-6 right-6">
             <span className="h-8 w-8 border border-gray-200 bg-white rounded-full flex items-center justify-center text-xs font-bold text-charcoal shadow-sm">
@@ -1321,13 +1321,13 @@ function App() {
           <div className="w-full max-w-[440px] bg-white rounded-3xl border border-gray-200/50 shadow-xl p-8 space-y-6">
             {/* Tabs */}
             <div className="flex border-b border-gray-100">
-              <button 
+              <button
                 className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors ${activeTab === 'acceso' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
                 onClick={() => setActiveTab('acceso')}
               >
                 Acceso
               </button>
-              <button 
+              <button
                 className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors ${activeTab === 'registro' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
                 onClick={() => setActiveTab('registro')}
               >
@@ -1346,22 +1346,22 @@ function App() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Primer Nombre</label>
-                    <input 
-                      type="text" 
-                      required 
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                      placeholder="Ej. Juan" 
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      placeholder="Ej. Juan"
                       value={regFirstName}
                       onChange={(e) => setRegFirstName(e.target.value)}
                     />
                   </div>
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Apellido</label>
-                    <input 
-                      type="text" 
-                      required 
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                      placeholder="Ej. Pérez" 
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      placeholder="Ej. Pérez"
                       value={regLastName}
                       onChange={(e) => setRegLastName(e.target.value)}
                     />
@@ -1369,22 +1369,22 @@ function App() {
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Nombre de empresa</label>
-                  <input 
-                    type="text" 
-                    required 
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                    placeholder="Ej. Mi Tienda S.L." 
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    placeholder="Ej. Mi Tienda S.L."
                     value={regCompany}
                     onChange={(e) => setRegCompany(e.target.value)}
                   />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Correo electrónico</label>
-                  <input 
-                    type="email" 
-                    required 
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                    placeholder="juan@correo.com" 
+                  <input
+                    type="email"
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    placeholder="juan@correo.com"
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                   />
@@ -1392,7 +1392,7 @@ function App() {
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Teléfono</label>
                   <div className="flex gap-2">
-                    <select 
+                    <select
                       className="px-2 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white"
                       value={regPhoneCode}
                       onChange={(e) => setRegPhoneCode(e.target.value)}
@@ -1402,11 +1402,11 @@ function App() {
                       <option value="+52">MX +52</option>
                       <option value="+54">AR +54</option>
                     </select>
-                    <input 
-                      type="tel" 
-                      required 
-                      className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                      placeholder="600 000 000" 
+                    <input
+                      type="tel"
+                      required
+                      className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      placeholder="600 000 000"
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
                     />
@@ -1414,29 +1414,29 @@ function App() {
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Contraseña</label>
-                  <input 
-                    type="password" 
-                    required 
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                    placeholder="••••••••" 
+                  <input
+                    type="password"
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    placeholder="••••••••"
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
                   />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Repita la contraseña</label>
-                  <input 
-                    type="password" 
-                    required 
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                    placeholder="••••••••" 
+                  <input
+                    type="password"
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    placeholder="••••••••"
                     value={regPasswordConfirm}
                     onChange={(e) => setRegPasswordConfirm(e.target.value)}
                   />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Plan</label>
-                  <select 
+                  <select
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs"
                     value={regPlan}
                     onChange={(e) => setRegPlan(e.target.value)}
@@ -1454,22 +1454,22 @@ function App() {
               <form className="space-y-4" onSubmit={handleLoginSubmit}>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Correo electrónico</label>
-                  <input 
-                    type="email" 
-                    required 
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                    placeholder="juan@correo.com" 
+                  <input
+                    type="email"
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    placeholder="juan@correo.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                   />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Contraseña</label>
-                  <input 
-                    type="password" 
-                    required 
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs" 
-                    placeholder="••••••••" 
+                  <input
+                    type="password"
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    placeholder="••••••••"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
@@ -1490,33 +1490,33 @@ function App() {
       {/* CABECERA (Header) */}
       <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isHeaderScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`} id="main-header">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <a 
-            href="#inicio" 
-            className="flex items-center gap-3 font-heading font-black text-2xl tracking-tight text-gray-900" 
-            id="logo-brand" 
+          <a
+            href="#inicio"
+            className="flex items-center gap-3 font-heading font-black text-2xl tracking-tight text-gray-900"
+            id="logo-brand"
             onClick={() => { setCurrentPage('landing'); setActiveNav('inicio'); }}
           >
             <img src="/logo-handshake.png" alt="2Gether Rewards Logo" className="brand-handshake-img" />
             2Gether<span>Rewards</span>
           </a>
-          
+
           <nav className={`lg:flex items-center gap-8 ${isMobileMenuOpen ? 'flex flex-col absolute top-full left-0 w-full bg-white border-b border-gray-100 py-6 px-8 shadow-lg gap-4' : 'hidden'}`} id="main-nav">
             {['inicio', 'beneficios', 'menu', 'tarjetas', 'quiz', 'opiniones'].map((nav) => (
-              <a 
+              <a
                 key={nav}
-                href={`#${nav}`} 
+                href={`#${nav}`}
                 className={`text-[0.95rem] font-semibold transition-colors duration-200 py-1 hover:text-primary ${activeNav === nav ? 'text-primary border-b-2 border-primary' : 'text-gray-600'}`}
                 onClick={() => { setActiveNav(nav); setIsMobileMenuOpen(false); }}
               >
-                {nav === 'inicio' ? 'Inicio' : 
-                 nav === 'beneficios' ? 'Beneficios' : 
-                 nav === 'menu' ? 'Planes' : 
-                 nav === 'tarjetas' ? 'Tarjetas' : 
-                 nav === 'quiz' ? '¿Cuál es mi Plan?' : 'Casos de Éxito'}
+                {nav === 'inicio' ? 'Inicio' :
+                  nav === 'beneficios' ? 'Beneficios' :
+                    nav === 'menu' ? 'Planes' :
+                      nav === 'tarjetas' ? 'Tarjetas' :
+                        nav === 'quiz' ? '¿Cuál es mi Plan?' : 'Casos de Éxito'}
               </a>
             ))}
             {isMobileMenuOpen && (
-              <button 
+              <button
                 className="w-full mt-2 py-3 bg-primary hover:bg-primary-hover text-white font-bold text-sm rounded-full shadow flex items-center justify-center gap-1.5"
                 onClick={() => { setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
               >
@@ -1524,17 +1524,17 @@ function App() {
               </button>
             )}
           </nav>
-          
+
           <div className="flex items-center gap-4">
-            <button 
+            <button
               className="hidden sm:inline-flex items-center gap-1.5 px-6 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
               onClick={() => { setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
             >
               <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
             </button>
-            <button 
-              className="lg:hidden p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50" 
-              id="mobile-menu-btn" 
+            <button
+              className="lg:hidden p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50"
+              id="mobile-menu-btn"
               onClick={() => setIsMobileMenuOpen(prev => !prev)}
               aria-label="Abrir menú de navegación móvil"
             >
@@ -1556,7 +1556,7 @@ function App() {
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Haz crecer tu negocio.</span>
             </h1>
             <p className="text-gray-600 text-base sm:text-lg max-w-2xl leading-relaxed">
-              Crea tarjetas de sellos, cashback y regalo 100% digitales compatibles con Apple Wallet y Google Wallet. Sin aplicaciones de terceros, sin hardware complejo. Aumenta la recompra y fideliza a tus clientes habituales desde hoy.
+              Crea tarjetas de sellos y regalo 100% digitales compatibles con Apple Wallet y Google Wallet. Sin aplicaciones de terceros, sin hardware complejo. Aumenta la recompra y fideliza a tus clientes habituales desde hoy.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <a href="#menu" className="px-8 py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/25 transition-all duration-200 hover:-translate-y-0.5" onClick={() => setActiveNav('menu')}>Ver Planes</a>
@@ -1565,7 +1565,7 @@ function App() {
               </a>
             </div>
           </div>
-          
+
           <div className="lg:col-span-5 flex justify-center">
             <div className="w-full max-w-[360px] bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden flex flex-col justify-between min-h-[520px]">
               <div>
@@ -1577,13 +1577,13 @@ function App() {
                     <span className="block font-heading font-light text-[0.7rem] text-gray-500 tracking-widest mt-0.5">REWARDS</span>
                   </div>
                 </div>
-                
+
                 {/* Card Banner Image (Cloudinary layout with stamps) */}
                 <div className="w-full">
-                  <img 
-                    src="https://res.cloudinary.com/dvmrbrrba/image/upload/v1781316175/LOGO_2GETHER_REWARDS-13_rlmvfq.png" 
-                    alt="2Gether Rewards Banner" 
-                    className="w-full h-auto object-cover" 
+                  <img
+                    src="https://res.cloudinary.com/dvmrbrrba/image/upload/v1781316175/LOGO_2GETHER_REWARDS-13_rlmvfq.png"
+                    alt="2Gether Rewards Banner"
+                    className="w-full h-auto object-cover"
                   />
                 </div>
 
@@ -1601,13 +1601,13 @@ function App() {
                   </div>
                 </div>
               </div>
-              
+
               {/* QR Code Section (Centered at the bottom with white space spacing) */}
               <div className="flex justify-center pb-8 pt-4">
-                <img 
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://2getherrewards.com" 
-                  alt="2Gether Rewards QR Code" 
-                  className="h-32 w-32 rounded-lg border border-gray-100 bg-white p-1" 
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://2getherrewards.com"
+                  alt="2Gether Rewards QR Code"
+                  className="h-32 w-32 rounded-lg border border-gray-100 bg-white p-1"
                 />
               </div>
             </div>
@@ -1626,7 +1626,7 @@ function App() {
               <h3 className="font-heading font-black text-xl text-gray-900">Tarjetas Digitales</h3>
               <p className="text-gray-600 text-[0.95rem] leading-relaxed">Tarjetas de sellos, cashback, regalo, descuento y membresías 100% digitales, sin apps. Compatible con Apple y Google Wallet.</p>
             </div>
-            
+
             <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
               <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
                 <i className="fa-solid fa-bell"></i>
@@ -1634,7 +1634,7 @@ function App() {
               <h3 className="font-heading font-black text-xl text-gray-900">Notificaciones Push</h3>
               <p className="text-gray-600 text-[0.95rem] leading-relaxed">Envía alertas, ofertas, cupones y recordatorios directamente al móvil de tus clientes sin que tengan que abrir ninguna aplicación.</p>
             </div>
-            
+
             <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
               <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
                 <i className="fa-solid fa-chart-line"></i>
@@ -1669,25 +1669,29 @@ function App() {
                   <p className="text-gray-500 text-sm">El impulso inicial para digitalizar tu negocio</p>
                 </div>
                 <hr className="border-gray-100" />
-                <ul className="space-y-3 text-left text-[0.95rem] text-gray-600">
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>1 Sucursal</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Hasta <strong>500 Clientes</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Tarjetas de Sellos <em>(Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Tarjetas de Regalo <em>(Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Notificaciones Push</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Dashboard en Tiempo Real</span></li>
+                <ul className="space-y-2.5 text-left text-[0.88rem] text-gray-600">
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>1 SUCURSAL</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>HASTA <strong>500 CLIENTES</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE SELLOS <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE REGALO <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>NOTIFICACIONES PUSH</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>GEO UBICACIÓN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO ADMIN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO EMPLEADO</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>SOPORTE POR CORREO</span></li>
                 </ul>
               </div>
               <div className="space-y-6 mt-8">
                 <div className="bg-gray-50 rounded-2xl p-4 flex gap-3 text-left text-xs text-gray-600">
                   <i className="fa-solid fa-store text-primary text-base"></i>
                   <div>
-                    <strong>Ideal para:</strong> Negocios locales, cafeterías y pequeños comercios.
+                    <strong>Ideal para:</strong> Emprendedores, cafeterías, barberías, restaurantes y pequeños comercios.
                   </div>
                 </div>
-                <button 
-                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95" 
-                  onClick={() => addToCart(1)}
+                <button
+                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95"
+                  onClick={() => { setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   Contratar Plan START
                 </button>
@@ -1709,25 +1713,30 @@ function App() {
                   <p className="text-gray-500 text-sm">Aumenta la frecuencia de compra y segmenta como los grandes</p>
                 </div>
                 <hr className="border-gray-100" />
-                <ul className="space-y-3 text-left text-[0.95rem] text-gray-600">
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Hasta <strong>5 Sucursales</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Hasta <strong>5,000 Clientes</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Tarjetas de Sellos y Regalo <em>(Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Notificaciones Push Ilimitadas</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Envío de Ofertas y Cupones</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Dashboard en Tiempo Real</span></li>
+                <ul className="space-y-2.5 text-left text-[0.88rem] text-gray-600">
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>HASTA <strong>5 SUCURSALES</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>HASTA <strong>5,000 CLIENTES</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE SELLOS <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE REGALO <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>NOTIFICACIONES PUSH</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>ENVÍO DE OFERTAS Y CUPONES</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>GEO LOCALIZACIÓN PARA TODAS LAS SUCURSALES</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO ADMIN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO EMPLEADO</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>SOPORTE POR CORREO</span></li>
                 </ul>
               </div>
               <div className="space-y-6 mt-8">
                 <div className="bg-emerald-50/50 rounded-2xl p-4 flex gap-3 text-left text-xs text-gray-600">
                   <i className="fa-solid fa-building text-primary text-base"></i>
                   <div>
-                    <strong>Ideal para:</strong> Cadenas locales y negocios en pleno crecimiento.
+                    <strong>Ideal para:</strong> Negocios en expansión, cadenas locales y franquicias pequeñas.
                   </div>
                 </div>
-                <button 
-                  className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/15 transition-transform duration-200 active:scale-95" 
-                  onClick={() => addToCart(2)}
+                <button
+                  className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/15 transition-transform duration-200 active:scale-95"
+                  onClick={() => { setRegPlan('Plan GROWTH - $69/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   Contratar Plan GROWTH
                 </button>
@@ -1746,25 +1755,30 @@ function App() {
                   <p className="text-gray-500 text-sm">Conectividad total, control corporativo y marketing integral</p>
                 </div>
                 <hr className="border-gray-100" />
-                <ul className="space-y-3 text-left text-[0.95rem] text-gray-600">
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>Sucursales Ilimitadas</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>Clientes Ilimitados</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Tarjetas de Sellos y Regalo <em>(Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Envío de Ofertas y Cupones</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Geo Localización Ilimitada</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>Soporte Prioritario</span></li>
+                <ul className="space-y-2.5 text-left text-[0.88rem] text-gray-600">
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>SUCURSALES ILIMITADAS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE SELLOS <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE REGALO <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>NOTIFICACIONES PUSH</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>ENVÍO DE OFERTAS Y CUPONES</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>GEO LOCALIZACIÓN ILIMITADA</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO ADMIN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO EMPLEADO</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>SOPORTE POR CORREO</span></li>
                 </ul>
               </div>
               <div className="space-y-6 mt-8">
                 <div className="bg-gray-50 rounded-2xl p-4 flex gap-3 text-left text-xs text-gray-600">
                   <i className="fa-solid fa-city text-primary text-base"></i>
                   <div>
-                    <strong>Ideal para:</strong> Franquicias y empresas con múltiples sedes.
+                    <strong>Ideal para:</strong> Franquicias, cadenas comerciales y empresas con múltiples sedes.
                   </div>
                 </div>
-                <button 
-                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95" 
-                  onClick={() => addToCart(3)}
+                <button
+                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95"
+                  onClick={() => { setRegPlan('Plan ENTERPRISE - $99/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   Contratar Plan ENTERPRISE
                 </button>
@@ -1812,9 +1826,9 @@ function App() {
                     <span className="text-emerald-300 text-sm">/ mes</span>
                   </div>
                 </div>
-                <button 
-                  className="w-full py-4 bg-lime hover:bg-lime/90 text-charcoal font-black rounded-full transition-transform duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-lime-500/10" 
-                  onClick={() => addToCart(4)}
+                <button
+                  className="w-full py-4 bg-lime hover:bg-lime/90 text-charcoal font-black rounded-full transition-transform duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-lime-500/10"
+                  onClick={() => { setRegPlan('Add-on Redes Sociales - $300/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   <i className="fa-brands fa-instagram"></i> Añadir Add-on Redes Sociales
                 </button>
@@ -1842,21 +1856,39 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 text-center space-y-16">
           <div className="max-w-2xl mx-auto space-y-3">
             <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900">¡Tu programa, <span className="text-primary">tus reglas!</span></h2>
-            <p className="text-gray-600">Nuestra plataforma es compatible con 8 tipos de lógicas comerciales para que utilices la que mejor se adapte a tu tipo de negocio.</p>
+            <p className="text-gray-600">Nuestra plataforma es compatible con 7 tipos de lógicas comerciales para que utilices la que mejor se adapte a tu tipo de negocio.</p>
           </div>
-          
+
+          {/* Fila 1: 4 tarjetas */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { id: 'sellos', icon: 'fa-stamp', title: 'Tarjeta de Sellos', desc: 'El clásico e infalible "Compra 10 cafés" y obtén 1 gratis.' },
-              { id: 'cashback', icon: 'fa-coins', title: 'Tarjeta de Cashback', desc: 'Recibe un porcentaje de lo pagado como saldo para tu próxima compra.' },
               { id: 'afiliacion', icon: 'fa-id-card', title: 'Tarjeta de Afiliación', desc: 'Registra clientes capturando sus datos a cambio de promociones exclusivas.' },
               { id: 'descuento', icon: 'fa-percent', title: 'Tarjeta de Descuento', desc: 'Premia la lealtad otorgando un porcentaje de descuento progresivo.' },
-              { id: 'cupon', icon: 'fa-ticket', title: 'Tarjeta de Cupón', desc: 'Regala un cupón digital de un solo uso en el instante de registro.' },
+              { id: 'cupon', icon: 'fa-ticket', title: 'Tarjeta de Cupón', desc: 'Regala un cupón digital de un solo uso en el instante de registro.' }
+            ].map((type) => (
+              <div key={type.id} className="p-6 rounded-3xl border border-gray-100 bg-gray-50/30 text-left flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
+                <div className="space-y-4">
+                  <div className="h-11 w-11 rounded-xl flex items-center justify-center text-lg bg-emerald-50/80 text-primary">
+                    <i className={`fa-solid ${type.icon}`}></i>
+                  </div>
+                  <h4 className="font-heading font-black text-lg text-gray-900 flex items-center gap-2">
+                    {type.title}
+                  </h4>
+                  <p className="text-gray-600 text-[0.88rem] leading-relaxed">{type.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Fila 2: 3 tarjetas centradas */}
+          <div className="flex flex-wrap justify-center gap-8">
+            {[
               { id: 'regalo', icon: 'fa-gift', title: 'Tarjeta de Regalo', desc: 'Emite y gestiona certificados de regalo 100% digitales y transferibles.' },
               { id: 'membresia', icon: 'fa-crown', title: 'Membresía PREMIUM', desc: 'Crea un club exclusivo para miembros VIP y acepta pagos recurrentes.', premium: true },
               { id: 'multipase', icon: 'fa-layer-group', title: 'Multipase PREMIUM', desc: 'Mejora tu flujo de caja cobrando por adelantado con tarjetas prepagadas.', premium: true }
             ].map((type) => (
-              <div key={type.id} className={`p-6 rounded-3xl border text-left flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 ${type.premium ? 'border-amber-200 bg-amber-50/10' : 'border-gray-100 bg-gray-50/30'}`}>
+              <div key={type.id} className={`w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] p-6 rounded-3xl border text-left flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 ${type.premium ? 'border-amber-200 bg-amber-50/10' : 'border-gray-100 bg-gray-50/30'}`}>
                 <div className="space-y-4">
                   <div className={`h-11 w-11 rounded-xl flex items-center justify-center text-lg ${type.premium ? 'bg-amber-100 text-amber-600' : 'bg-emerald-50/80 text-primary'}`}>
                     <i className={`fa-solid ${type.icon}`}></i>
@@ -1880,7 +1912,7 @@ function App() {
             <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900">¿Cuál es tu <span className="text-primary">Plan Ideal?</span></h2>
             <p className="text-gray-600">Responde 3 preguntas rápidas y te recomendamos el plan 2GetherRewards perfecto para tu negocio.</p>
           </div>
-          
+
           <div className="max-w-xl mx-auto bg-white rounded-3xl border border-gray-100 p-8 shadow-xl min-h-[300px] flex items-center justify-center">
             {/* Pantalla Inicial */}
             {quizStep === 0 && (
@@ -1897,7 +1929,7 @@ function App() {
                 </button>
               </div>
             )}
-            
+
             {/* Pregunta 1 */}
             {quizStep === 1 && (
               <div className="w-full text-left space-y-6">
@@ -1911,8 +1943,8 @@ function App() {
                     { val: 'cold', icon: 'fa-store', label: 'Comercio Local y Retail', desc: 'Tiendas, estéticas, barberías o salones.' },
                     { val: 'grains', icon: 'fa-building', label: 'Franquicia o Cadena', desc: 'Múltiples sucursales o en expansión.' }
                   ].map((opt) => (
-                    <div 
-                      key={opt.val} 
+                    <div
+                      key={opt.val}
                       className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.type === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
                       onClick={() => selectQuizAnswer('type', opt.val)}
                     >
@@ -1940,8 +1972,8 @@ function App() {
                     { val: 'acid', icon: 'fa-people-group', label: '500 a 5,000', desc: 'Negocio consolidado y en crecimiento.' },
                     { val: 'strong', icon: 'fa-city', label: 'Más de 5,000', desc: 'Gran volumen o múltiples ubicaciones.' }
                   ].map((opt) => (
-                    <div 
-                      key={opt.val} 
+                    <div
+                      key={opt.val}
                       className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.flavor === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
                       onClick={() => selectQuizAnswer('flavor', opt.val)}
                     >
@@ -1968,8 +2000,8 @@ function App() {
                     { val: 'pastry', icon: 'fa-arrows-spin', label: 'Hacer que vuelvan más seguido', desc: 'Retención y automatización de visitas.' },
                     { val: 'pure', icon: 'fa-chart-pie', label: 'Analizar y crecer a escala', desc: 'Control de múltiples puntos de venta y datos.' }
                   ].map((opt) => (
-                    <div 
-                      key={opt.val} 
+                    <div
+                      key={opt.val}
                       className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.addons === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
                       onClick={() => selectQuizAnswer('addons', opt.val)}
                     >
@@ -1995,9 +2027,9 @@ function App() {
                   </div>
                   <h4 className="font-heading font-black text-lg text-gray-900">{recommendedPlan.name}</h4>
                   <p className="text-gray-600 text-sm leading-relaxed">{recommendedPlan.desc}</p>
-                  <button 
-                    className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold rounded-full text-sm" 
-                    onClick={() => { addToCart(recommendedPlan.id); openCart(); }}
+                  <button
+                    className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold rounded-full text-sm"
+                    onClick={() => { setRegPlan(recommendedPlan.name); setCurrentPage('dashboard-trial'); }}
                   >
                     Contratar este Plan
                   </button>
@@ -2071,7 +2103,7 @@ function App() {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6 flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="text-amber-400 text-sm">
@@ -2150,7 +2182,7 @@ function App() {
             <i className="fa-solid fa-xmark text-gray-500"></i>
           </button>
         </div>
-        
+
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {cart.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-4 text-gray-400">
@@ -2182,7 +2214,7 @@ function App() {
             ))
           )}
         </div>
-        
+
         <div className="p-6 border-t border-gray-100 bg-gray-50/50 space-y-6">
           <div className="space-y-2.5 text-sm">
             <div className="flex justify-between text-gray-600">

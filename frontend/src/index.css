@@ -61,8 +61,10 @@ body {
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
-    background-image: radial-gradient(circle at 10% 20%, rgba(105, 191, 161, 0.15) 0%, transparent 45%),
-                      radial-gradient(circle at 90% 80%, rgba(79, 166, 176, 0.15) 0%, transparent 45%);
+    background-image: radial-gradient(circle at 15% 15%, rgba(105, 191, 161, 0.22) 0%, transparent 40%),
+                      radial-gradient(circle at 85% 45%, rgba(79, 166, 176, 0.22) 0%, transparent 45%),
+                      radial-gradient(circle at 25% 85%, rgba(166, 214, 91, 0.18) 0%, transparent 40%);
+    background-attachment: fixed;
 }
 
 /* Barra de Desplazamiento Customizada */
@@ -104,14 +106,14 @@ a {
 
 .section-title {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 36px;
     position: relative;
 }
 
 .section-title h2 {
-    font-size: 3rem;
+    font-size: 2.6rem;
     font-weight: 700;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     letter-spacing: -0.5px;
 }
 
@@ -127,7 +129,7 @@ a {
     width: 80px;
     height: 4px;
     background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-lime), transparent);
-    margin: 20px auto 0;
+    margin: 14px auto 0;
     border-radius: 10px;
 }
 
@@ -332,10 +334,12 @@ a {
 
 /* Héroe (Hero) */
 .hero {
-    min-height: 100vh;
-    padding-top: var(--header-height);
-    background: radial-gradient(circle at 80% 50%, rgba(79, 166, 176, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(105, 191, 161, 0.08) 0%, transparent 50%),
+    padding-top: calc(var(--header-height) + 40px);
+    padding-bottom: 60px;
+    min-height: auto;
+    background: radial-gradient(circle at 80% 40%, rgba(79, 166, 176, 0.18) 0%, transparent 55%),
+                radial-gradient(circle at 15% 70%, rgba(105, 191, 161, 0.20) 0%, transparent 55%),
+                radial-gradient(circle at 50% 90%, rgba(166, 214, 91, 0.12) 0%, transparent 45%),
                 var(--bg-main);
     display: flex;
     align-items: center;
@@ -350,16 +354,16 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(rgba(200, 200, 200, 0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(200, 200, 200, 0.1) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(105, 191, 161, 0.08) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(105, 191, 161, 0.08) 1px, transparent 1px);
     background-size: 40px 40px;
-    opacity: 0.4;
+    opacity: 0.6;
 }
 
 .hero .container {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
-    gap: 50px;
+    gap: 32px;
     align-items: center;
     width: 100%;
     z-index: 10;
@@ -595,15 +599,15 @@ a {
 
 /* Beneficios / Features */
 .features {
-    padding: 120px 0;
-    background: var(--bg-secondary);
+    padding: 65px 0;
+    background: linear-gradient(180deg, rgba(235, 235, 235, 0.7) 0%, rgba(244, 244, 244, 0.9) 100%);
     position: relative;
 }
 
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    gap: 24px;
 }
 
 .feature-card {
@@ -612,7 +616,7 @@ a {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 20px;
-    padding: 45px 35px;
+    padding: 35px 28px;
     text-align: center;
     transition: var(--transition-smooth);
     box-shadow: var(--shadow-sm);
@@ -662,7 +666,7 @@ a {
 
 /* Tienda / Planes */
 .shop {
-    padding: 120px 0;
+    padding: 65px 0;
     background: var(--bg-main);
 }
 
@@ -863,19 +867,19 @@ a {
 
 /* Quiz de Recomendación */
 .quiz-section {
-    padding: 120px 0;
-    background: radial-gradient(circle at 50% 50%, rgba(105, 191, 161, 0.08) 0%, transparent 60%),
-                var(--bg-secondary);
+    padding: 65px 0;
+    background: radial-gradient(circle at 50% 50%, rgba(105, 191, 161, 0.14) 0%, transparent 65%),
+                linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-main) 100%);
     position: relative;
 }
 
 .quiz-container {
     max-width: 800px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.85);
     border: 1px solid var(--border-card);
     border-radius: 24px;
-    padding: 60px;
+    padding: 40px 45px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: var(--shadow-md);
@@ -1083,7 +1087,7 @@ a {
 
 /* Plataforma / Nosotros */
 .about {
-    padding: 120px 0;
+    padding: 65px 0;
     background: var(--bg-main);
     position: relative;
 }
